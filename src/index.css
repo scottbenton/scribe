@@ -1,0 +1,34 @@
+@layer reset, base, tokens, recipes, utilities;
+
+:root {
+  /* Clean */
+  --font-inter: "Inter Variable", sans-serif;
+  --font-rubik: "Rubik Variable", sans-serif;
+  --font-lora: "Lora Variable", serif;
+  --font-newsreader: "Newsreader Variable", serif;
+  --font-ibm-plex-serif: "IBM Plex Serif", serif;
+
+  /* Fantasy */
+  --font-vollkorn: "Vollkorn Variable", serif;
+  --font-bitter: "Bitter Variable", serif;
+  --font-alice: "Alice", serif;
+  --font-im-fell-english: "IM Fell English", serif;
+
+  /* Space Age */
+  --font-orbitron: "Orbitron Variable", sans-serif;
+  --font-exo-2: "Exo 2 Variable", sans-serif;
+  --font-rajdhani: "Rajdhani", sans-serif;
+
+  /* Terminal */
+  --font-space-mono: "Space Mono", monospace;
+  --font-ibm-plex-mono: "IBM Plex Mono", monospace;
+
+  /* Accessibility */
+  --font-lexend: "Lexend Variable", sans-serif;
+}
+
+body {
+  font-family: var(--font-active, var(--font-inter));
+  background-color: var(--colors-gray-surface-bg-active);
+  color: var(--colors-gray-surface-fg);
+}
