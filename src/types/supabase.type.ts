@@ -66,6 +66,44 @@ export type Database = {
           },
         ]
       }
+      realm_category_items: {
+        Row: {
+          category_id: string
+          created_at: string
+          field_contents: Json
+          id: string
+          label: string
+          notes_text: Json | null
+          order: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          field_contents?: Json
+          id?: string
+          label: string
+          notes_text?: Json | null
+          order: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          field_contents?: Json
+          id?: string
+          label?: string
+          notes_text?: Json | null
+          order?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "realm_category_items_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "realm_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       realm_users: {
         Row: {
           created_at: string

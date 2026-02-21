@@ -6,29 +6,29 @@ import { Portal } from "@ark-ui/react/portal";
 import { Button, Input } from "@/components/ui";
 import * as Dialog from "@/components/ui/dialog";
 import * as Field from "@/components/ui/field";
-import { useCreateRealmCategory } from "@/hooks/useCreateRealmCategory";
-import { useRealmId } from "../../../hooks/useRealmId";
-import { useRealmCategories } from "@/hooks/useRealmCategories";
+import { useCreateRealmCategoryItem } from "@/hooks/useCreateRealmCategoryItem";
+import { useRealmCategoryItems } from "@/hooks/useRealmCategoryItems";
 import { Box } from "styled-system/jsx";
 
 const schema = z.object({
-  name: z.string().min(1, "Name is required"),
+  label: z.string().min(1, "Label is required"),
 });
 
 type FormValues = z.infer<typeof schema>;
 
-interface CreateCategoryDialogProps {
+interface CreateItemDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  categoryId: string;
 }
 
-export function CreateCategoryDialog({
+export function CreateItemDialog({
   open,
   onOpenChange,
-}: CreateCategoryDialogProps) {
-  const realmId = useRealmId();
-  const { categories } = useRealmCategories(realmId);
-  const { createCategory, isLoading } = useCreateRealmCategory(realmId);
+  categoryId,
+}: CreateItemDialogProps) {
+  const { items } = useRealmCategoryItems(categoryId);
+  const { createItem, isLoading } = useCreateRealmCategoryItem(categoryId);
 
   const {
     register,
@@ -40,14 +40,14 @@ export function CreateCategoryDialog({
   });
 
   function onSubmit(values: FormValues) {
-    const maxOrder = categories?.reduce<string | null>(
-      (max, cat) => (max === null || cat.order > max ? cat.order : max),
+    const maxOrder = items?.reduce<string | null>(
+      (max, item) => (max === null || item.order > max ? item.order : max),
       null,
     );
     const order = generateKeyBetween(maxOrder, null);
 
-    createCategory(
-      { name: values.name, order },
+    createItem(
+      { label: values.label, order },
       {
         onSuccess: () => {
           reset();
@@ -70,18 +70,18 @@ export function CreateCategoryDialog({
           <Dialog.Content maxW="xs">
             <form onSubmit={handleSubmit(onSubmit)}>
               <Dialog.Header>
-                <Dialog.Title>New Category</Dialog.Title>
+                <Dialog.Title>New Item</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body py={5}>
-                <Field.Root invalid={!!errors.name} width="full">
-                  <Field.Label>Name</Field.Label>
+                <Field.Root invalid={!!errors.label} width="full">
+                  <Field.Label>Label</Field.Label>
                   <Input
-                    {...register("name")}
+                    {...register("label")}
                     autoFocus
-                    placeholder="Category name"
+                    placeholder="Item label"
                   />
-                  {errors.name && (
-                    <Field.ErrorText>{errors.name.message}</Field.ErrorText>
+                  {errors.label && (
+                    <Field.ErrorText>{errors.label.message}</Field.ErrorText>
                   )}
                 </Field.Root>
               </Dialog.Body>

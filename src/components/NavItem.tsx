@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { GripVertical } from "lucide-react";
+import { GripVertical, Plus } from "lucide-react";
 import { Portal } from "@ark-ui/react/portal";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import type { DraggableAttributes } from "@dnd-kit/core";
@@ -21,6 +21,7 @@ export interface NavItemProps {
   href: string;
   onRename: (newName: string) => void;
   onDelete: () => void;
+  onAdd?: () => void;
   contextMenuItems?: NavItemContextMenuItem[];
   dragListeners?: SyntheticListenerMap;
   dragAttributes?: DraggableAttributes;
@@ -32,6 +33,7 @@ export function NavItem({
   href,
   onRename,
   onDelete,
+  onAdd,
   contextMenuItems = [],
   dragListeners,
   dragAttributes,
@@ -64,6 +66,8 @@ export function NavItem({
             className={css({
               "& .drag-handle": { opacity: 0 },
               "&:hover .drag-handle": { opacity: 1 },
+              "& .add-button": { opacity: 0 },
+              "&:hover .add-button": { opacity: 1 },
             })}
           >
             {/* Drag handle */}
@@ -115,6 +119,25 @@ export function NavItem({
               >
                 {label}
               </Link>
+            )}
+
+            {/* Add button */}
+            {onAdd && (
+              <Box
+                className="add-button"
+                display="flex"
+                alignItems="center"
+                flexShrink={0}
+                color="fg.subtle"
+                cursor="pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onAdd();
+                }}
+              >
+                <Plus size={14} />
+              </Box>
             )}
           </Box>
         </Menu.ContextTrigger>

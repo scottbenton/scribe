@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   DndContext,
   closestCenter,
@@ -6,73 +6,36 @@ import {
   useSensor,
   useSensors,
   type DragEndEvent,
+  type DragOverEvent,
 } from "@dnd-kit/core";
 import {
   SortableContext,
-  useSortable,
   verticalListSortingStrategy,
+  arrayMove,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { generateKeyBetween } from "fractional-indexing";
 import { PlusIcon } from "lucide-react";
 import { Button, IconButton, Text } from "@/components/ui";
-import { NavItem } from "@/components/NavItem";
 import { useRealmCategories } from "@/hooks/useRealmCategories";
-import { useUpdateRealmCategoryName } from "@/hooks/useUpdateRealmCategoryName";
 import { useUpdateRealmCategoryOrder } from "@/hooks/useUpdateRealmCategoryOrder";
-import { useDeleteRealmCategory } from "@/hooks/useDeleteRealmCategory";
-import { type IRealmCategory } from "@/types/realm-categories.type";
-import { routes } from "@/routes/routes";
 import { useRealmId } from "../../../hooks/useRealmId";
 import { CreateCategoryDialog } from "./CreateCategoryDialog";
+import { SortableCategoryItem } from "./SortableCategoryItem";
+import { type IRealmCategory } from "@/types/realm-categories.type";
 import { Box } from "styled-system/jsx";
-
-interface SortableCategoryItemProps {
-  category: IRealmCategory;
-  realmId: string;
-}
-
-function SortableCategoryItem({
-  category,
-  realmId,
-}: SortableCategoryItemProps) {
-  const { updateName } = useUpdateRealmCategoryName(realmId);
-  const { deleteCategory } = useDeleteRealmCategory(realmId);
-
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: category.id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <div ref={setNodeRef} style={style}>
-      <NavItem
-        label={category.name}
-        href={routes.category(realmId, category.id)}
-        onRename={(name) => updateName({ id: category.id, name })}
-        onDelete={() => deleteCategory(category.id)}
-        dragListeners={listeners}
-        dragAttributes={attributes}
-        isDragging={isDragging}
-      />
-    </div>
-  );
-}
 
 export function Categories() {
   const realmId = useRealmId();
   const { categories, error } = useRealmCategories(realmId);
   const { updateOrder } = useUpdateRealmCategoryOrder(realmId);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [localCategories, setLocalCategories] = useState<IRealmCategory[]>([]);
+
+  useEffect(() => {
+    if (categories) {
+      setLocalCategories(categories);
+    }
+  }, [categories]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -84,27 +47,39 @@ export function Categories() {
     throw error;
   }
 
+  const categoryIds = useMemo(
+    () => localCategories.map((c) => c.id),
+    [localCategories],
+  );
+
   if (!categories) {
     return null;
   }
 
+  function handleDragOver(event: DragOverEvent) {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    setLocalCategories((items) => {
+      const activeIndex = items.findIndex((c) => c.id === active.id);
+      const overIndex = items.findIndex((c) => c.id === over.id);
+      if (activeIndex === -1 || overIndex === -1) return items;
+      return arrayMove(items, activeIndex, overIndex);
+    });
+  }
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
-    if (!over || active.id === over.id || !categories) return;
+    if (!over || active.id === over.id) return;
 
-    const activeIndex = categories.findIndex((c) => c.id === active.id);
-    const overIndex = categories.findIndex((c) => c.id === over.id);
+    const activeIndex = localCategories.findIndex((c) => c.id === active.id);
+    const overIndex = localCategories.findIndex((c) => c.id === over.id);
     if (activeIndex === -1 || overIndex === -1) return;
 
-    // Build prev/next neighbors after the item is placed at overIndex
-    const sorted = [...categories];
-    const movingDown = activeIndex < overIndex;
-    const prev =
-      overIndex > 0 ? sorted[overIndex - (movingDown ? 0 : 1)] : null;
-    const next =
-      overIndex < sorted.length - 1
-        ? sorted[overIndex + (movingDown ? 1 : 0)]
-        : null;
+    const moved = arrayMove(localCategories, activeIndex, overIndex);
+    const movedIndex = moved.findIndex((c) => c.id === active.id);
+    const prev = movedIndex > 0 ? moved[movedIndex - 1] : null;
+    const next = movedIndex < moved.length - 1 ? moved[movedIndex + 1] : null;
 
     const newOrder = generateKeyBetween(
       prev?.order ?? null,
@@ -112,8 +87,6 @@ export function Categories() {
     );
     updateOrder({ id: String(active.id), order: newOrder });
   }
-
-  const categoryIds = categories.map((c) => c.id);
 
   return (
     <>
@@ -137,7 +110,7 @@ export function Categories() {
         </IconButton>
       </Box>
 
-      {categories.length === 0 ? (
+      {localCategories.length === 0 ? (
         <Box
           display="flex"
           flexDir="column"
@@ -159,15 +132,17 @@ export function Categories() {
         </Box>
       ) : (
         <DndContext
+          id="categories-dnd"
           sensors={sensors}
           collisionDetection={closestCenter}
+          onDragOver={handleDragOver}
           onDragEnd={handleDragEnd}
         >
           <SortableContext
             items={categoryIds}
             strategy={verticalListSortingStrategy}
           >
-            {categories.map((category) => (
+            {localCategories.map((category) => (
               <SortableCategoryItem
                 key={category.id}
                 category={category}

@@ -6,6 +6,7 @@ import {
   CategoryPage,
   CreateRealmPage,
   DefaultRealmPage,
+  ItemPage,
   RealmLayout,
   RealmPage,
 } from "./realms";
@@ -34,6 +35,11 @@ export function Routes() {
             <Route path={routes.realm(":realmId")} nest>
               <RealmLayout>
                 <Switch>
+                  <Route
+                    path={routes.item(":realmId", ":categoryId", ":itemId")}
+                  >
+                    <ItemPage />
+                  </Route>
                   <Route path={routes.category(":realmId", ":categoryId")}>
                     <CategoryPage />
                   </Route>
