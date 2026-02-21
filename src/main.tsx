@@ -38,9 +38,12 @@ import "@fontsource/ibm-plex-mono/700-italic.css";
 
 // Accessibility
 import "@fontsource-variable/lexend";
+import { AppProviders } from "./context/AppProviders";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
+    <AppProviders>
+      <App />
+    </AppProviders>
   </React.StrictMode>,
 );

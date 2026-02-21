@@ -60,6 +60,10 @@ export const select = defineSlotRecipe({
       alignItems: 'center',
       justifyContent: 'center',
       color: { base: 'fg.subtle' },
+      transition: 'transform 0.2s',
+      _open: {
+        transform: 'rotate(180deg)',
+      },
     },
     itemGroupLabel: {
       alignItems: 'flex-start',
