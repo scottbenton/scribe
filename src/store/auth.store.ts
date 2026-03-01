@@ -1,6 +1,7 @@
 import { AuthRepository } from "@/lib/repository/auth.repository";
-import { createImmerStore } from "./createImmerStore";
 import { useEffect } from "react";
+
+import { createImmerStore } from "./createImmerStore";
 
 export enum AuthStatus {
   Loading,

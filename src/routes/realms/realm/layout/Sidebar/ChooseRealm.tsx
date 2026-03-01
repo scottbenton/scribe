@@ -1,12 +1,16 @@
-import { useUsersRealms } from "@/hooks/useUsersRealms";
-import * as Select from "@/components/ui/select";
-import { createListCollection } from "@ark-ui/react/select";
-import { useLocation } from "wouter";
-import { routes } from "@/routes/routes";
-import { useRealmId } from "../../hooks/useRealmId";
-import { Box } from "styled-system/jsx";
-import { PlusIcon } from "lucide-react";
 import { Portal } from "@ark-ui/react";
+import { createListCollection } from "@ark-ui/react/select";
+import { PlusIcon } from "lucide-react";
+import { Box } from "styled-system/jsx";
+import { useLocation } from "wouter";
+
+import * as Select from "@/components/ui/select";
+
+import { routes } from "@/routes/routes";
+
+import { useUsersRealms } from "@/hooks/useUsersRealms";
+
+import { useRealmId } from "../../hooks/useRealmId";
 
 export function ChooseRealm() {
   const { realms, isLoading, error } = useUsersRealms();
@@ -31,7 +35,7 @@ export function ChooseRealm() {
       onValueChange={({ value }) => {
         if (value[0]) navigate(routes.realm(value[0]));
       }}
-      variant={"subtle" as any}
+      variant={"subtle" as unknown as "outline"}
     >
       <Select.Control>
         <Select.Trigger>

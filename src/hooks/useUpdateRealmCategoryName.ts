@@ -8,7 +8,9 @@ export function useUpdateRealmCategoryName(realmId: string) {
     mutationFn: ({ id, name }: { id: string; name: string }) =>
       RealmCategoriesRepository.updateName(id, name),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["realm-categories", realmId] });
+      queryClient.invalidateQueries({
+        queryKey: ["realm-categories", realmId],
+      });
     },
   });
 

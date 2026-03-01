@@ -1,30 +1,35 @@
-import { useState, useEffect, useMemo } from "react";
-import { useLocation } from "wouter";
 import {
   DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors,
   type DragEndEvent,
   type DragOverEvent,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import {
   SortableContext,
-  verticalListSortingStrategy,
   arrayMove,
+  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { generateKeyBetween } from "fractional-indexing";
 import { PlusIcon } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Box } from "styled-system/jsx";
+import { useLocation } from "wouter";
+
 import { Button, IconButton, Text } from "@/components/ui";
+
+import { routes } from "@/routes/routes";
+
+import { type IRealmCategory } from "@/types/realm-categories.type";
+
+import { useCreateRealmCategory } from "@/hooks/useCreateRealmCategory";
 import { useRealmCategories } from "@/hooks/useRealmCategories";
 import { useUpdateRealmCategoryOrder } from "@/hooks/useUpdateRealmCategoryOrder";
-import { useCreateRealmCategory } from "@/hooks/useCreateRealmCategory";
+
 import { useRealmId } from "../../../hooks/useRealmId";
 import { SortableCategoryItem } from "./SortableCategoryItem";
-import { type IRealmCategory } from "@/types/realm-categories.type";
-import { routes } from "@/routes/routes";
-import { Box } from "styled-system/jsx";
 
 export function Categories() {
   const realmId = useRealmId();
@@ -36,6 +41,7 @@ export function Categories() {
 
   useEffect(() => {
     if (categories) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalCategories(categories);
     }
   }, [categories]);
@@ -65,11 +71,14 @@ export function Categories() {
       null,
     );
     const order = generateKeyBetween(maxOrder, null);
-    createCategory({ order }, {
-      onSuccess: (newCategory) => {
-        navigate(routes.category(realmId, newCategory.id));
+    createCategory(
+      { order },
+      {
+        onSuccess: (newCategory) => {
+          navigate(routes.category(realmId, newCategory.id));
+        },
       },
-    });
+    );
   }
 
   function handleDragOver(event: DragOverEvent) {
@@ -138,11 +147,7 @@ export function Categories() {
           <Text textStyle="sm" color="fg.muted">
             No categories yet
           </Text>
-          <Button
-            variant="subtle"
-            size="sm"
-            onClick={handleAddCategory}
-          >
+          <Button variant="subtle" size="sm" onClick={handleAddCategory}>
             Create category
           </Button>
         </Box>
@@ -168,7 +173,6 @@ export function Categories() {
           </SortableContext>
         </DndContext>
       )}
-
     </>
   );
 }

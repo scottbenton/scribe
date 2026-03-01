@@ -1,18 +1,19 @@
-import { useState } from "react";
-import { Portal } from "@ark-ui/react/portal";
-import * as Dialog from "@/components/ui/dialog";
 import { GameIconList } from "@/components/GameIconSelector/GameIconList";
 import { Field, IconButton, Input } from "@/components/ui";
+import * as Dialog from "@/components/ui/dialog";
 import { type IconConfig } from "@/types/icon-config.type";
+import { Portal } from "@ark-ui/react/portal";
+import { XIcon } from "lucide-react";
+import { useState } from "react";
+import { css } from "styled-system/css";
+import { Box } from "styled-system/jsx";
+
 import {
-  ICON_COLORS,
   DEFAULT_ICON_COLOR_KEY,
+  ICON_COLORS,
   IconColorKey,
   resolveIconColor,
 } from "./iconColors";
-import { Box } from "styled-system/jsx";
-import { css } from "styled-system/css";
-import { XIcon } from "lucide-react";
 
 interface IconPickerDialogProps {
   open: boolean;

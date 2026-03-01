@@ -1,11 +1,12 @@
-import { useState, useEffect, useMemo } from "react";
+import { IconButton, Spinner, Text } from "@/components/ui";
+import { useEffect, useMemo, useState } from "react";
 import { VirtuosoGrid } from "react-virtuoso";
 import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
-import { IconButton, Spinner, Text } from "@/components/ui";
+
+import { IconColorKey, resolveIconColor } from "../IconPicker/iconColors";
 import { GameIcon } from "./GameIcon";
 import { getIconName } from "./getIconName";
-import { IconColorKey, resolveIconColor } from "../IconPicker/iconColors";
 
 interface GameIconListProps {
   search: string;

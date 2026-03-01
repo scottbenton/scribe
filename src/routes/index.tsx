@@ -1,7 +1,7 @@
 import { Route, Switch } from "wouter";
-import { AuthPage } from "./auth";
+
 import { AuthBlocker } from "./AuthBlocker";
-import { routes } from "./routes";
+import { AuthPage } from "./auth";
 import {
   CategoryPage,
   CreateRealmPage,
@@ -10,6 +10,7 @@ import {
   RealmLayout,
   RealmPage,
 } from "./realms";
+import { routes } from "./routes";
 
 export function Routes() {
   return (

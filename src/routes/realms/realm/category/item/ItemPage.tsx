@@ -1,20 +1,24 @@
-import { useState, useEffect, useCallback } from "react";
-import { useLocation, useParams } from "wouter";
 import { type JSONContent } from "@tiptap/core";
-import { Button } from "@/components/ui";
-import * as Editable from "@/components/ui/editable";
+import { useCallback, useEffect, useState } from "react";
+import { css } from "styled-system/css";
+import { Box } from "styled-system/jsx";
+import { useLocation, useParams } from "wouter";
+
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { IconDisplay } from "@/components/IconPicker";
 import { RichTextEditor } from "@/components/RichTextEditor";
-import { useRealmCategoryItem } from "@/hooks/useRealmCategoryItem";
-import { useUpdateRealmCategoryItemLabel } from "@/hooks/useUpdateRealmCategoryItemLabel";
-import { useUpdateRealmCategoryItemIcon } from "@/hooks/useUpdateRealmCategoryItemIcon";
-import { useUpdateRealmCategoryItemNotesText } from "@/hooks/useUpdateRealmCategoryItemNotesText";
-import { useDeleteRealmCategoryItem } from "@/hooks/useDeleteRealmCategoryItem";
-import { useRealmId } from "../../hooks/useRealmId";
+import { Button } from "@/components/ui";
+import * as Editable from "@/components/ui/editable";
+
 import { routes } from "@/routes/routes";
-import { Box } from "styled-system/jsx";
-import { css } from "styled-system/css";
+
+import { useDeleteRealmCategoryItem } from "@/hooks/useDeleteRealmCategoryItem";
+import { useRealmCategoryItem } from "@/hooks/useRealmCategoryItem";
+import { useUpdateRealmCategoryItemIcon } from "@/hooks/useUpdateRealmCategoryItemIcon";
+import { useUpdateRealmCategoryItemLabel } from "@/hooks/useUpdateRealmCategoryItemLabel";
+import { useUpdateRealmCategoryItemNotesText } from "@/hooks/useUpdateRealmCategoryItemNotesText";
+
+import { useRealmId } from "../../hooks/useRealmId";
 
 export function ItemPage() {
   const realmId = useRealmId();
@@ -34,13 +38,14 @@ export function ItemPage() {
 
   useEffect(() => {
     if (item?.label !== undefined) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLabelValue(item.label);
     }
   }, [item?.label]);
 
   const handleSave = useCallback(
-    (content: JSONContent) => {
-      updateNotesText(content);
+    (content: JSONContent, text: string) => {
+      updateNotesText({ notes: content, notesText: text });
     },
     [updateNotesText],
   );

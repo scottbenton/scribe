@@ -1,6 +1,7 @@
 import { IRealm, RealmUserRole } from "@/types/realms.type";
-import { supabase } from "../supabase.lib";
 import { Tables } from "@/types/supabase.type";
+
+import { supabase } from "../supabase.lib";
 
 type RealmUserDAO = Tables<"realm_users">;
 

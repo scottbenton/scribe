@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { createListCollection } from "@ark-ui/react/select";
-import { css } from "styled-system/css";
 import { Select } from "@/components/ui";
 import {
   allFontItems,
@@ -8,6 +5,9 @@ import {
   getThemeSettings,
   setFont,
 } from "@/lib/theme";
+import { createListCollection } from "@ark-ui/react/select";
+import { useState } from "react";
+import { css } from "styled-system/css";
 
 const collection = createListCollection({
   items: allFontItems,

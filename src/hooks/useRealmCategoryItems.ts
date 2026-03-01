@@ -1,6 +1,6 @@
-import { useMemo } from "react";
 import { RealmCategoryItemsRepository } from "@/lib/repository/realm-category-items.repository";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 export function useRealmCategoryItems(categoryId: string) {
   const { data, isLoading, error } = useQuery({
@@ -11,7 +11,9 @@ export function useRealmCategoryItems(categoryId: string) {
   const items = useMemo(
     () =>
       data
-        ? [...data].sort((a, b) => (a.order < b.order ? -1 : a.order > b.order ? 1 : 0))
+        ? [...data].sort((a, b) =>
+            a.order < b.order ? -1 : a.order > b.order ? 1 : 0,
+          )
         : undefined,
     [data],
   );

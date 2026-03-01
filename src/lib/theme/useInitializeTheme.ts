@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { getThemeSettings } from "./storage.lib";
+
 import { setColorInternal, setModeInternal } from "./colors.lib";
 import { setFontInternal } from "./fonts.lib";
 import { setRadiusInternal } from "./radius.lib";
+import { getThemeSettings } from "./storage.lib";
 
 export function useInitializeTheme() {
   useEffect(() => {

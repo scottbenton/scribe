@@ -1,14 +1,15 @@
-import { useLocation } from "wouter";
+import { NavItem } from "@/components/NavItem";
+import { useCreateRealmCategoryItem } from "@/hooks/useCreateRealmCategoryItem";
+import { useDeleteRealmCategory } from "@/hooks/useDeleteRealmCategory";
+import { useRealmCategoryItems } from "@/hooks/useRealmCategoryItems";
+import { useUpdateRealmCategoryName } from "@/hooks/useUpdateRealmCategoryName";
+import { routes } from "@/routes/routes";
+import { type IRealmCategory } from "@/types/realm-categories.type";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { generateKeyBetween } from "fractional-indexing";
-import { NavItem } from "@/components/NavItem";
-import { useUpdateRealmCategoryName } from "@/hooks/useUpdateRealmCategoryName";
-import { useDeleteRealmCategory } from "@/hooks/useDeleteRealmCategory";
-import { useCreateRealmCategoryItem } from "@/hooks/useCreateRealmCategoryItem";
-import { useRealmCategoryItems } from "@/hooks/useRealmCategoryItems";
-import { type IRealmCategory } from "@/types/realm-categories.type";
-import { routes } from "@/routes/routes";
+import { useLocation } from "wouter";
+
 import { CategoryItems } from "./CategoryItems";
 
 interface SortableCategoryItemProps {
@@ -39,16 +40,20 @@ export function SortableCategoryItem(props: SortableCategoryItemProps) {
   };
 
   function handleAddItem() {
-    const maxOrder = items?.reduce<string | null>(
-      (max, item) => (max === null || item.order > max ? item.order : max),
-      null,
-    ) ?? null;
+    const maxOrder =
+      items?.reduce<string | null>(
+        (max, item) => (max === null || item.order > max ? item.order : max),
+        null,
+      ) ?? null;
     const order = generateKeyBetween(maxOrder, null);
-    createItem({ order }, {
-      onSuccess: (newItem) => {
-        navigate(routes.item(realmId, category.id, newItem.id));
+    createItem(
+      { order },
+      {
+        onSuccess: (newItem) => {
+          navigate(routes.item(realmId, category.id, newItem.id));
+        },
       },
-    });
+    );
   }
 
   return (

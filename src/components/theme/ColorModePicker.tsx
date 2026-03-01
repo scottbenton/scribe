@@ -1,7 +1,8 @@
 import { getThemeSettings, setMode } from "@/lib/theme";
-import { useState } from "react";
-import { ButtonGroup, IconButton, ToggleGroup } from "../ui";
 import { MoonIcon, SunIcon } from "lucide-react";
+import { useState } from "react";
+
+import { ButtonGroup, IconButton, ToggleGroup } from "../ui";
 
 export function ColorModePicker() {
   const [colorMode, setColorMode] = useState(getThemeSettings().mode);

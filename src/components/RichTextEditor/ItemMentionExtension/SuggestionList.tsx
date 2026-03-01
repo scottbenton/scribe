@@ -1,3 +1,4 @@
+import type { SuggestionProps } from "@tiptap/suggestion";
 import {
   forwardRef,
   useEffect,
@@ -5,9 +6,9 @@ import {
   useRef,
   useState,
 } from "react";
-import type { SuggestionProps } from "@tiptap/suggestion";
-import type { MentionItem } from "./itemMentionOptions";
 import { menu } from "styled-system/recipes";
+
+import type { MentionItem } from "./itemMentionOptions";
 
 const styles = menu({ size: "sm" });
 
@@ -23,6 +24,7 @@ export const SuggestionList = forwardRef<
   const selectedRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedIndex(0);
   }, [props.items]);
 

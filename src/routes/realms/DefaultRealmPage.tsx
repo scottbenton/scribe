@@ -1,6 +1,7 @@
 import { Progress } from "@/components/ui";
 import { useNewestRealmId } from "@/hooks/useNewestRealmId";
 import { Redirect } from "wouter";
+
 import { routes } from "../routes";
 
 export function DefaultRealmPage() {

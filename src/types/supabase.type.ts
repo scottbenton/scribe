@@ -4,239 +4,242 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   graphql_public: {
     Tables: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       graphql: {
         Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
+          extensions?: Json;
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+        };
+        Returns: Json;
+      };
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       realm_categories: {
         Row: {
-          created_at: string
-          icon: Json | null
-          id: string
-          label: string | null
-          order: string
-          realm_id: string
-        }
+          created_at: string;
+          icon: Json | null;
+          id: string;
+          label: string | null;
+          order: string;
+          realm_id: string;
+        };
         Insert: {
-          created_at?: string
-          icon?: Json | null
-          id?: string
-          label?: string | null
-          order: string
-          realm_id: string
-        }
+          created_at?: string;
+          icon?: Json | null;
+          id?: string;
+          label?: string | null;
+          order: string;
+          realm_id: string;
+        };
         Update: {
-          created_at?: string
-          icon?: Json | null
-          id?: string
-          label?: string | null
-          order?: string
-          realm_id?: string
-        }
+          created_at?: string;
+          icon?: Json | null;
+          id?: string;
+          label?: string | null;
+          order?: string;
+          realm_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "realm_categories_realm_id_fkey"
-            columns: ["realm_id"]
-            isOneToOne: false
-            referencedRelation: "realms"
-            referencedColumns: ["id"]
+            foreignKeyName: "realm_categories_realm_id_fkey";
+            columns: ["realm_id"];
+            isOneToOne: false;
+            referencedRelation: "realms";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       realm_category_items: {
         Row: {
-          category_id: string
-          created_at: string
-          field_contents: Json
-          icon: Json | null
-          id: string
-          label: string | null
-          notes: Json | null
-          notes_text: string | null
-          order: string
-        }
+          category_id: string;
+          created_at: string;
+          field_contents: Json;
+          icon: Json | null;
+          id: string;
+          label: string | null;
+          notes: Json | null;
+          notes_text: string | null;
+          order: string;
+        };
         Insert: {
-          category_id: string
-          created_at?: string
-          field_contents?: Json
-          icon?: Json | null
-          id?: string
-          label?: string | null
-          notes?: Json | null
-          notes_text?: string | null
-          order: string
-        }
+          category_id: string;
+          created_at?: string;
+          field_contents?: Json;
+          icon?: Json | null;
+          id?: string;
+          label?: string | null;
+          notes?: Json | null;
+          notes_text?: string | null;
+          order: string;
+        };
         Update: {
-          category_id?: string
-          created_at?: string
-          field_contents?: Json
-          icon?: Json | null
-          id?: string
-          label?: string | null
-          notes?: Json | null
-          notes_text?: string | null
-          order?: string
-        }
+          category_id?: string;
+          created_at?: string;
+          field_contents?: Json;
+          icon?: Json | null;
+          id?: string;
+          label?: string | null;
+          notes?: Json | null;
+          notes_text?: string | null;
+          order?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "realm_category_items_category_id_fkey"
-            columns: ["category_id"]
-            isOneToOne: false
-            referencedRelation: "realm_categories"
-            referencedColumns: ["id"]
+            foreignKeyName: "realm_category_items_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "realm_categories";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       realm_users: {
         Row: {
-          created_at: string
-          realm_id: string
-          role: Database["public"]["Enums"]["realm_user_roles"]
-          user_id: string
-        }
+          created_at: string;
+          realm_id: string;
+          role: Database["public"]["Enums"]["realm_user_roles"];
+          user_id: string;
+        };
         Insert: {
-          created_at?: string
-          realm_id: string
-          role: Database["public"]["Enums"]["realm_user_roles"]
-          user_id: string
-        }
+          created_at?: string;
+          realm_id: string;
+          role: Database["public"]["Enums"]["realm_user_roles"];
+          user_id: string;
+        };
         Update: {
-          created_at?: string
-          realm_id?: string
-          role?: Database["public"]["Enums"]["realm_user_roles"]
-          user_id?: string
-        }
+          created_at?: string;
+          realm_id?: string;
+          role?: Database["public"]["Enums"]["realm_user_roles"];
+          user_id?: string;
+        };
         Relationships: [
           {
-            foreignKeyName: "realm_users_realm_id_fkey"
-            columns: ["realm_id"]
-            isOneToOne: false
-            referencedRelation: "realms"
-            referencedColumns: ["id"]
+            foreignKeyName: "realm_users_realm_id_fkey";
+            columns: ["realm_id"];
+            isOneToOne: false;
+            referencedRelation: "realms";
+            referencedColumns: ["id"];
           },
           {
-            foreignKeyName: "realm_users_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "user_profiles"
-            referencedColumns: ["id"]
+            foreignKeyName: "realm_users_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_profiles";
+            referencedColumns: ["id"];
           },
-        ]
-      }
+        ];
+      };
       realms: {
         Row: {
-          created_at: string
-          id: string
-          name: string
-        }
+          created_at: string;
+          id: string;
+          name: string;
+        };
         Insert: {
-          created_at?: string
-          id?: string
-          name: string
-        }
+          created_at?: string;
+          id?: string;
+          name: string;
+        };
         Update: {
-          created_at?: string
-          id?: string
-          name?: string
-        }
-        Relationships: []
-      }
+          created_at?: string;
+          id?: string;
+          name?: string;
+        };
+        Relationships: [];
+      };
       user_profiles: {
         Row: {
-          created_at: string
-          display_name: string
-          email: string | null
-          id: string
-        }
+          created_at: string;
+          display_name: string;
+          email: string | null;
+          id: string;
+        };
         Insert: {
-          created_at?: string
-          display_name?: string
-          email?: string | null
-          id: string
-        }
+          created_at?: string;
+          display_name?: string;
+          email?: string | null;
+          id: string;
+        };
         Update: {
-          created_at?: string
-          display_name?: string
-          email?: string | null
-          id?: string
-        }
-        Relationships: []
-      }
-    }
+          created_at?: string;
+          display_name?: string;
+          email?: string | null;
+          id?: string;
+        };
+        Relationships: [];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
       create_realm: {
-        Args: { realm_name: string }
+        Args: { realm_name: string };
         Returns: {
-          created_at: string
-          id: string
-          name: string
-        }
+          created_at: string;
+          id: string;
+          name: string;
+        };
         SetofOptions: {
-          from: "*"
-          to: "realms"
-          isOneToOne: true
-          isSetofReturn: false
-        }
-      }
-    }
+          from: "*";
+          to: "realms";
+          isOneToOne: true;
+          isSetofReturn: false;
+        };
+      };
+    };
     Enums: {
-      realm_user_roles: "owner"
-    }
+      realm_user_roles: "owner";
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
 
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
+type DefaultSchema = DatabaseWithoutInternals[Extract<
+  keyof Database,
+  "public"
+>];
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
       DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -244,95 +247,95 @@ export type Tables<
         DefaultSchema["Views"])
     ? (DefaultSchema["Tables"] &
         DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
     | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
 > = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
     ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
     | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
 > = DefaultSchemaEnumNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
+    : never;
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
     | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
+    schema: keyof DatabaseWithoutInternals;
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
 > = PublicCompositeTypeNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
+  schema: keyof DatabaseWithoutInternals;
 }
   ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+    : never;
 
 export const Constants = {
   graphql_public: {
@@ -343,5 +346,4 @@ export const Constants = {
       realm_user_roles: ["owner"],
     },
   },
-} as const
-
+} as const;

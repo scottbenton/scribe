@@ -1,7 +1,7 @@
-import { NodeViewWrapper, type NodeViewProps } from "@tiptap/react";
-import { useLocation } from "wouter";
 import { routes } from "@/routes/routes";
+import { type NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import { css } from "styled-system/css";
+import { useLocation } from "wouter";
 
 export function ItemMentionView(props: NodeViewProps) {
   const { node } = props;

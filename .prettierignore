@@ -1,0 +1,5 @@
+*.md
+*.json
+src-tauri/gen/*
+src-tauri/target/*
+styled-system/*

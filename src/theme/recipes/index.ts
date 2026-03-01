@@ -1,24 +1,25 @@
-import { menu } from "./menu";
-import { editable } from "./editable";
-import { dialog } from "./dialog";
-import { skeleton } from "./skeleton";
-import { drawer } from "./drawer";
-import { scrollArea } from "./scroll-area";
+import { absoluteCenter } from "./absolute-center";
+import { button } from "./button";
 import { card } from "./card";
-import { progress } from "./progress";
-import { pinInput } from "./pin-input";
+import { dialog } from "./dialog";
+import { drawer } from "./drawer";
+import { editable } from "./editable";
 import { field } from "./field";
-import { input } from "./input";
-import { text } from "./text";
+import { group } from "./group";
 import { heading } from "./heading";
 import { icon } from "./icon";
+import { input } from "./input";
+import { menu } from "./menu";
+import { pinInput } from "./pin-input";
 import { popover } from "./popover";
-import { toggleGroup } from "./toggle-group";
+import { progress } from "./progress";
+import { scrollArea } from "./scroll-area";
 import { select } from "./select";
+import { skeleton } from "./skeleton";
 import { spinner } from "./spinner";
-import { absoluteCenter } from "./absolute-center";
-import { group } from "./group";
-import { button } from "./button";
+import { text } from "./text";
+import { toggleGroup } from "./toggle-group";
+
 export const recipes = {
   button,
   group,
@@ -40,6 +41,6 @@ export const recipes = {
   skeleton,
   dialog,
   editable,
-  menu
-}
-export const slotRecipes = {}
+  menu,
+};
+export const slotRecipes = {};

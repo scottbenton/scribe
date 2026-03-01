@@ -1,7 +1,8 @@
+import * as Drawer from "@/components/ui/drawer";
 import { css } from "styled-system/css";
+
 import { useLayout } from "../LayoutProvider";
 import { SidebarContents } from "./SidebarContents";
-import * as Drawer from "@/components/ui/drawer";
 
 const SIDEBAR_WIDTH = "250px";
 

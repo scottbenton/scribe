@@ -1,4 +1,5 @@
 import { type JSONContent } from "@tiptap/core";
+
 import { type IconConfig } from "./icon-config.type";
 
 export interface IRealmCategoryItem {

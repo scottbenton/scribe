@@ -1,7 +1,7 @@
-import { type ReactNode } from "react";
-import { Portal } from "@ark-ui/react/portal";
 import { Button } from "@/components/ui";
 import * as Dialog from "@/components/ui/dialog";
+import { Portal } from "@ark-ui/react/portal";
+import { type ReactNode } from "react";
 import { Box } from "styled-system/jsx";
 
 interface ConfirmDialogBaseProps {
@@ -54,27 +54,27 @@ export function ConfirmDialog({
         <Dialog.Backdrop />
         <Dialog.Positioner>
           <Dialog.Content>
-          <Dialog.Header>
-            <Dialog.Title>{title}</Dialog.Title>
-            {description && (
-              <Dialog.Description>{description}</Dialog.Description>
-            )}
-          </Dialog.Header>
-          <Dialog.Footer>
-            <Box display="flex" gap={3} justifyContent="flex-end">
-              <Dialog.ActionTrigger asChild>
-                <Button variant="outline">{cancelLabel}</Button>
-              </Dialog.ActionTrigger>
-              <Dialog.ActionTrigger asChild>
-                <Button
-                  colorPalette={destructive ? "red" : undefined}
-                  onClick={onConfirm}
-                >
-                  {confirmLabel}
-                </Button>
-              </Dialog.ActionTrigger>
-            </Box>
-          </Dialog.Footer>
+            <Dialog.Header>
+              <Dialog.Title>{title}</Dialog.Title>
+              {description && (
+                <Dialog.Description>{description}</Dialog.Description>
+              )}
+            </Dialog.Header>
+            <Dialog.Footer>
+              <Box display="flex" gap={3} justifyContent="flex-end">
+                <Dialog.ActionTrigger asChild>
+                  <Button variant="outline">{cancelLabel}</Button>
+                </Dialog.ActionTrigger>
+                <Dialog.ActionTrigger asChild>
+                  <Button
+                    colorPalette={destructive ? "red" : undefined}
+                    onClick={onConfirm}
+                  >
+                    {confirmLabel}
+                  </Button>
+                </Dialog.ActionTrigger>
+              </Box>
+            </Dialog.Footer>
           </Dialog.Content>
         </Dialog.Positioner>
       </Portal>

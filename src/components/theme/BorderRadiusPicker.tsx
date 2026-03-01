@@ -1,7 +1,7 @@
 import {
+  Radius,
   getThemeSettings,
   radii,
-  Radius,
   setRadius,
   visibleRadii,
 } from "@/lib/theme";

@@ -1,10 +1,10 @@
+import { NavItem } from "@/components/NavItem";
+import { useDeleteRealmCategoryItem } from "@/hooks/useDeleteRealmCategoryItem";
+import { useUpdateRealmCategoryItemLabel } from "@/hooks/useUpdateRealmCategoryItemLabel";
+import { routes } from "@/routes/routes";
+import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { NavItem } from "@/components/NavItem";
-import { useUpdateRealmCategoryItemLabel } from "@/hooks/useUpdateRealmCategoryItemLabel";
-import { useDeleteRealmCategoryItem } from "@/hooks/useDeleteRealmCategoryItem";
-import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
-import { routes } from "@/routes/routes";
 import { Box } from "styled-system/jsx";
 
 interface SortableItemProps {

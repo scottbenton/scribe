@@ -1,6 +1,7 @@
-import { PropsWithChildren, useCallback, useMemo, useState } from "react";
-import { LayoutContext } from "./LayoutContext";
 import { useBreakpointBelow } from "@/hooks/useBreakpoint";
+import { PropsWithChildren, useCallback, useMemo, useState } from "react";
+
+import { LayoutContext } from "./LayoutContext";
 
 export function LayoutProvider(props: PropsWithChildren) {
   const { children } = props;

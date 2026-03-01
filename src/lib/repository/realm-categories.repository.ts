@@ -1,5 +1,7 @@
-import { IRealmCategory } from "@/types/realm-categories.type";
 import { type IconConfig } from "@/types/icon-config.type";
+import { IRealmCategory } from "@/types/realm-categories.type";
+import { Json } from "@/types/supabase.type";
+
 import { supabase } from "../supabase.lib";
 
 export class RealmCategoriesRepository {
@@ -50,7 +52,9 @@ export class RealmCategoriesRepository {
     id: string,
     icon: IconConfig | null,
   ): Promise<void> {
-    const { error } = await this.table().update({ icon: icon as any }).eq("id", id);
+    const { error } = await this.table()
+      .update({ icon: icon as unknown as Json })
+      .eq("id", id);
 
     if (error) {
       console.error(error);

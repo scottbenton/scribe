@@ -1,12 +1,13 @@
-import { css } from "styled-system/css";
+import { IconButton } from "@/components/ui";
 import {
+  PanelLeftCloseIcon,
   PanelLeftIcon,
   PanelLeftOpenIcon,
-  PanelLeftCloseIcon,
 } from "lucide-react";
-import { useLayout } from "./LayoutProvider";
+import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
-import { IconButton } from "@/components/ui";
+
+import { useLayout } from "./LayoutProvider";
 
 export function Header() {
   const { isSidebarOpen, isSidebarADrawer, toggleSidebarOpen } = useLayout();

@@ -1,7 +1,7 @@
-import { type JSONContent } from "@tiptap/core";
 import { RealmCategoryItemsRepository } from "@/lib/repository/realm-category-items.repository";
 import { type IRealmCategoryItemDetail } from "@/types/realm-category-items.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { type JSONContent } from "@tiptap/core";
 
 export function useUpdateRealmCategoryItemNotesText(itemId: string) {
   const queryClient = useQueryClient();

@@ -1,0 +1,19 @@
+{
+  "endOfLine": "auto",
+  "importOrder": [
+    "^@/assets/(.*)$",
+    "^@/context/(.*)$",
+    "^@/components/(.*)$",
+    "^@/routes/(.*)$",
+    "^@/types/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/lib/(.*)$",
+    "^@/store/(.*)$",
+    "^@/theme/(.*)$",
+    "^@/config/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
+}

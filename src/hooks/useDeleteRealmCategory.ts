@@ -7,7 +7,9 @@ export function useDeleteRealmCategory(realmId: string) {
   const { mutate, isPending, isError } = useMutation({
     mutationFn: (id: string) => RealmCategoriesRepository.deleteCategory(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["realm-categories", realmId] });
+      queryClient.invalidateQueries({
+        queryKey: ["realm-categories", realmId],
+      });
     },
   });
 

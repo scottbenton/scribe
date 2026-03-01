@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { RealmsContext } from "./RealmsContext";
+
 import { useRealmId } from "../../hooks/useRealmId";
+import { RealmsContext } from "./RealmsContext";
 
 export function useRealms() {
   return useContext(RealmsContext);

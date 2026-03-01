@@ -1,6 +1,8 @@
 import { PropsWithChildren } from "react";
-import { ScrollArea as UIScrollArea } from "./ui";
 import { css } from "styled-system/css";
+
+import { ScrollArea as UIScrollArea } from "./ui";
+
 export function ScrollArea(props: PropsWithChildren) {
   const { children } = props;
 
