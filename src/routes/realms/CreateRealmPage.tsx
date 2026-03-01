@@ -37,11 +37,12 @@ export function CreateRealmPage() {
   });
 
   return (
+    <Box h="100vh" overflowY="auto">
     <Box
       display="flex"
       justifyContent="center"
       alignItems="center"
-      minH="100vh"
+      minH="100%"
       px={4}
     >
       <Card.Root maxW="md" w="full">
@@ -85,6 +86,7 @@ export function CreateRealmPage() {
           </Box>
         </Card.Body>
       </Card.Root>
+    </Box>
     </Box>
   );
 }

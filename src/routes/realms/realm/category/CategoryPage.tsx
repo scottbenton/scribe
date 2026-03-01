@@ -3,8 +3,10 @@ import { useLocation, useParams } from "wouter";
 import { Button } from "@/components/ui";
 import * as Editable from "@/components/ui/editable";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { IconDisplay } from "@/components/IconPicker";
 import { useRealmCategories } from "@/hooks/useRealmCategories";
 import { useUpdateRealmCategoryName } from "@/hooks/useUpdateRealmCategoryName";
+import { useUpdateRealmCategoryIcon } from "@/hooks/useUpdateRealmCategoryIcon";
 import { useDeleteRealmCategory } from "@/hooks/useDeleteRealmCategory";
 import { useRealmId } from "../hooks/useRealmId";
 import { routes } from "@/routes/routes";
@@ -18,18 +20,19 @@ export function CategoryPage() {
 
   const { categories } = useRealmCategories(realmId);
   const { updateName } = useUpdateRealmCategoryName(realmId);
+  const { updateIcon } = useUpdateRealmCategoryIcon(realmId);
   const { deleteCategory } = useDeleteRealmCategory(realmId);
 
   const category = categories?.find((c) => c.id === categoryId);
 
-  const [nameValue, setNameValue] = useState(category?.name ?? "");
+  const [nameValue, setNameValue] = useState(category?.label ?? "");
 
   // Sync when the category name changes externally (e.g. renamed from sidebar)
   useEffect(() => {
-    if (category?.name !== undefined) {
-      setNameValue(category.name);
+    if (category?.label !== undefined) {
+      setNameValue(category.label);
     }
-  }, [category?.name]);
+  }, [category?.label]);
 
   if (!category) {
     return null;
@@ -37,7 +40,7 @@ export function CategoryPage() {
 
   function handleNameCommit(value: string) {
     const trimmed = value.trim();
-    if (trimmed && trimmed !== category!.name) {
+    if (trimmed && trimmed !== category!.label) {
       updateName({ id: category!.id, name: trimmed });
     }
   }
@@ -57,36 +60,44 @@ export function CategoryPage() {
       w="full"
       key={categoryId}
     >
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Editable.Root
-          value={nameValue}
-          onValueChange={(details) => setNameValue(details.value)}
-          activationMode="dblclick"
-          onValueCommit={(details) => handleNameCommit(details.value)}
-        >
-          <Editable.Area>
-            <Editable.Input
-              className={css({
-                fontSize: "2xl",
-                fontWeight: "semibold",
-                background: "transparent",
-                border: "none",
-                outline: "none",
-                p: 0,
-              })}
-            />
-            <Editable.Preview
-              className={css({
-                fontSize: "2xl",
-                fontWeight: "semibold",
-                cursor: "text",
-              })}
-            />
-          </Editable.Area>
-        </Editable.Root>
+      <Box display="flex" alignItems="center" gap={3} justifyContent="space-between">
+        <Box display="flex" alignItems="center" gap={3} flex={1} minW={0}>
+          <IconDisplay
+            icon={category.icon}
+            defaultType="category"
+            size={32}
+            onSelect={(icon) => updateIcon({ id: category.id, icon })}
+          />
+          <Editable.Root
+            value={nameValue}
+            onValueChange={(details) => setNameValue(details.value)}
+            activationMode="dblclick"
+            onValueCommit={(details) => handleNameCommit(details.value)}
+          >
+            <Editable.Area>
+              <Editable.Input
+                className={css({
+                  fontSize: "2xl",
+                  fontWeight: "semibold",
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  p: 0,
+                })}
+              />
+              <Editable.Preview
+                className={css({
+                  fontSize: "2xl",
+                  fontWeight: "semibold",
+                  cursor: "text",
+                })}
+              />
+            </Editable.Area>
+          </Editable.Root>
+        </Box>
 
         <ConfirmDialog
-          title={`Delete "${category.name}"?`}
+          title={`Delete "${category.label ?? "New Category"}"?`}
           description="This will permanently delete the category and cannot be undone."
           confirmLabel="Delete"
           destructive

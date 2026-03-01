@@ -37,22 +37,25 @@ export type Database = {
       realm_categories: {
         Row: {
           created_at: string
+          icon: Json | null
           id: string
-          name: string
+          label: string | null
           order: string
           realm_id: string
         }
         Insert: {
           created_at?: string
+          icon?: Json | null
           id?: string
-          name: string
+          label?: string | null
           order: string
           realm_id: string
         }
         Update: {
           created_at?: string
+          icon?: Json | null
           id?: string
-          name?: string
+          label?: string | null
           order?: string
           realm_id?: string
         }
@@ -71,8 +74,9 @@ export type Database = {
           category_id: string
           created_at: string
           field_contents: Json
+          icon: Json | null
           id: string
-          label: string
+          label: string | null
           notes_text: Json | null
           order: string
         }
@@ -80,8 +84,9 @@ export type Database = {
           category_id: string
           created_at?: string
           field_contents?: Json
+          icon?: Json | null
           id?: string
-          label: string
+          label?: string | null
           notes_text?: Json | null
           order: string
         }
@@ -89,8 +94,9 @@ export type Database = {
           category_id?: string
           created_at?: string
           field_contents?: Json
+          icon?: Json | null
           id?: string
-          label?: string
+          label?: string | null
           notes_text?: Json | null
           order?: string
         }

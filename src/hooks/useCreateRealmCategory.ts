@@ -5,8 +5,8 @@ export function useCreateRealmCategory(realmId: string) {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, isError } = useMutation({
-    mutationFn: ({ name, order }: { name: string; order: string }) =>
-      RealmCategoriesRepository.createCategory(realmId, name, order),
+    mutationFn: ({ order }: { order: string }) =>
+      RealmCategoriesRepository.createCategory(realmId, order),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["realm-categories", realmId],

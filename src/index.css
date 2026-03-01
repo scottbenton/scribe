@@ -11,7 +11,6 @@
   /* Fantasy */
   --font-vollkorn: "Vollkorn Variable", serif;
   --font-bitter: "Bitter Variable", serif;
-  --font-alice: "Alice", serif;
   --font-im-fell-english: "IM Fell English", serif;
 
   /* Space Age */
@@ -25,6 +24,12 @@
 
   /* Accessibility */
   --font-lexend: "Lexend Variable", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
 }
 
 body {

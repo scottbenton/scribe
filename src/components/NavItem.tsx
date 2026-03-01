@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Link } from "wouter";
-import { GripVertical, Plus } from "lucide-react";
+import { GripVertical, Plus, Folder, FileText } from "lucide-react";
 import { Portal } from "@ark-ui/react/portal";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import type { DraggableAttributes } from "@dnd-kit/core";
 import * as Editable from "@/components/ui/editable";
 import * as Menu from "@/components/ui/menu";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { GameIcon } from "@/components/GameIconSelector/GameIcon";
+import { type IconConfig } from "@/types/icon-config.type";
+import { resolveIconColor } from "@/components/IconPicker/iconColors";
 import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
 
@@ -17,7 +20,10 @@ export interface NavItemContextMenuItem {
 }
 
 export interface NavItemProps {
-  label: string;
+  label: string | undefined;
+  defaultLabel: string;
+  icon?: IconConfig | null;
+  defaultIconType: "category" | "item";
   href: string;
   onRename: (newName: string) => void;
   onDelete: () => void;
@@ -28,19 +34,24 @@ export interface NavItemProps {
   isDragging?: boolean;
 }
 
-export function NavItem({
-  label,
-  href,
-  onRename,
-  onDelete,
-  onAdd,
-  contextMenuItems = [],
-  dragListeners,
-  dragAttributes,
-  isDragging = false,
-}: NavItemProps) {
+export function NavItem(props: NavItemProps) {
+  const {
+    label,
+    defaultLabel,
+    icon = null,
+    defaultIconType,
+    href,
+    onRename,
+    onDelete,
+    onAdd,
+    contextMenuItems = [],
+    dragListeners,
+    dragAttributes,
+    isDragging = false,
+  } = props;
   const [isRenaming, setIsRenaming] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const displayLabel = label ?? defaultLabel;
 
   function handleRenameCommit(value: string) {
     const trimmed = value.trim();
@@ -84,11 +95,27 @@ export function NavItem({
               <GripVertical size={14} />
             </Box>
 
+            {/* Icon */}
+            <Box
+              display="flex"
+              alignItems="center"
+              flexShrink={0}
+              style={{ color: icon ? resolveIconColor(icon.color) : "currentColor" }}
+            >
+              {icon ? (
+                <GameIcon iconKey={icon.key} size={14} />
+              ) : defaultIconType === "category" ? (
+                <Folder size={14} />
+              ) : (
+                <FileText size={14} />
+              )}
+            </Box>
+
             {/* Inline rename or link */}
             {isRenaming ? (
               <Box flex={1}>
                 <Editable.Root
-                  defaultValue={label}
+                  defaultValue={displayLabel}
                   autoResize
                   activationMode="focus"
                   defaultEdit
@@ -117,7 +144,7 @@ export function NavItem({
                   whiteSpace: "nowrap",
                 })}
               >
-                {label}
+                {displayLabel}
               </Link>
             )}
 
@@ -176,7 +203,7 @@ export function NavItem({
       <ConfirmDialog
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
-        title={`Delete "${label}"?`}
+        title={`Delete "${displayLabel}"?`}
         description="This action cannot be undone."
         confirmLabel="Delete"
         destructive

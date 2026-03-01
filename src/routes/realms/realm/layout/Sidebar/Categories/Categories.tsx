@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useLocation } from "wouter";
 import {
   DndContext,
   closestCenter,
@@ -18,17 +19,19 @@ import { PlusIcon } from "lucide-react";
 import { Button, IconButton, Text } from "@/components/ui";
 import { useRealmCategories } from "@/hooks/useRealmCategories";
 import { useUpdateRealmCategoryOrder } from "@/hooks/useUpdateRealmCategoryOrder";
+import { useCreateRealmCategory } from "@/hooks/useCreateRealmCategory";
 import { useRealmId } from "../../../hooks/useRealmId";
-import { CreateCategoryDialog } from "./CreateCategoryDialog";
 import { SortableCategoryItem } from "./SortableCategoryItem";
 import { type IRealmCategory } from "@/types/realm-categories.type";
+import { routes } from "@/routes/routes";
 import { Box } from "styled-system/jsx";
 
 export function Categories() {
   const realmId = useRealmId();
+  const [, navigate] = useLocation();
   const { categories, error } = useRealmCategories(realmId);
   const { updateOrder } = useUpdateRealmCategoryOrder(realmId);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const { createCategory } = useCreateRealmCategory(realmId);
   const [localCategories, setLocalCategories] = useState<IRealmCategory[]>([]);
 
   useEffect(() => {
@@ -54,6 +57,19 @@ export function Categories() {
 
   if (!categories) {
     return null;
+  }
+
+  function handleAddCategory() {
+    const maxOrder = localCategories.reduce<string | null>(
+      (max, c) => (max === null || c.order > max ? c.order : max),
+      null,
+    );
+    const order = generateKeyBetween(maxOrder, null);
+    createCategory({ order }, {
+      onSuccess: (newCategory) => {
+        navigate(routes.category(realmId, newCategory.id));
+      },
+    });
   }
 
   function handleDragOver(event: DragOverEvent) {
@@ -104,7 +120,7 @@ export function Categories() {
           size="xs"
           variant="plain"
           aria-label="Add category"
-          onClick={() => setDialogOpen(true)}
+          onClick={handleAddCategory}
         >
           <PlusIcon size={14} />
         </IconButton>
@@ -125,7 +141,7 @@ export function Categories() {
           <Button
             variant="subtle"
             size="sm"
-            onClick={() => setDialogOpen(true)}
+            onClick={handleAddCategory}
           >
             Create category
           </Button>
@@ -153,7 +169,6 @@ export function Categories() {
         </DndContext>
       )}
 
-      <CreateCategoryDialog open={dialogOpen} onOpenChange={setDialogOpen} />
     </>
   );
 }

@@ -2,6 +2,8 @@ import {
   IRealmCategoryItem,
   IRealmCategoryItemDetail,
 } from "@/types/realm-category-items.type";
+import { type IconConfig } from "@/types/icon-config.type";
+import { type JSONContent } from "@tiptap/core";
 import { supabase } from "../supabase.lib";
 
 export class RealmCategoryItemsRepository {
@@ -12,7 +14,7 @@ export class RealmCategoryItemsRepository {
     categoryId: string,
   ): Promise<IRealmCategoryItem[]> {
     const { data, error } = await this.table()
-      .select("id, label, order, category_id, created_at")
+      .select("id, label, order, icon, category_id, created_at")
       .eq("category_id", categoryId)
       .order("order", { ascending: true });
 
@@ -24,8 +26,9 @@ export class RealmCategoryItemsRepository {
     return data.map((row: any) => ({
       id: row.id,
       categoryId: row.category_id,
-      label: row.label,
+      label: row.label ?? undefined,
       order: row.order,
+      icon: (row.icon as IconConfig | null) ?? null,
       createdAt: new Date(row.created_at),
     }));
   }
@@ -45,8 +48,9 @@ export class RealmCategoryItemsRepository {
     return {
       id: row.id,
       categoryId: row.category_id,
-      label: row.label,
+      label: row.label ?? undefined,
       order: row.order,
+      icon: (row.icon as IconConfig | null) ?? null,
       createdAt: new Date(row.created_at),
       notesText: row.notes_text ?? null,
       fieldContents: row.field_contents ?? {},
@@ -55,12 +59,11 @@ export class RealmCategoryItemsRepository {
 
   public static async createItem(
     categoryId: string,
-    label: string,
     order: string,
   ): Promise<IRealmCategoryItem> {
     const { data, error } = await this.table()
-      .insert({ category_id: categoryId, label, order })
-      .select("id, label, order, category_id, created_at")
+      .insert({ category_id: categoryId, order })
+      .select("id, label, order, icon, category_id, created_at")
       .single();
 
     if (error) {
@@ -72,8 +75,9 @@ export class RealmCategoryItemsRepository {
     return {
       id: row.id,
       categoryId: row.category_id,
-      label: row.label,
+      label: row.label ?? undefined,
       order: row.order,
+      icon: (row.icon as IconConfig | null) ?? null,
       createdAt: new Date(row.created_at),
     };
   }
@@ -94,6 +98,51 @@ export class RealmCategoryItemsRepository {
       console.error(error);
       throw new Error("Failed to update realm category item order");
     }
+  }
+
+  public static async updateIcon(
+    id: string,
+    icon: IconConfig | null,
+  ): Promise<void> {
+    const { error } = await this.table().update({ icon: icon as any }).eq("id", id);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Failed to update realm category item icon");
+    }
+  }
+
+  public static async updateNotesText(
+    id: string,
+    notesText: JSONContent,
+  ): Promise<void> {
+    const { error } = await this.table()
+      .update({ notes_text: notesText as any })
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Failed to update realm category item notes text");
+    }
+  }
+
+  public static updateNotesTextBeacon(
+    id: string,
+    notesText: JSONContent,
+    token: string,
+  ): void {
+    const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/realm_category_items?id=eq.${id}`;
+    fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        Apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({ notes_text: notesText }),
+      keepalive: true,
+    });
   }
 
   public static async deleteItem(id: string): Promise<void> {

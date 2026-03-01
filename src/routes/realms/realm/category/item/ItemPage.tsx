@@ -1,10 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation, useParams } from "wouter";
-import { Button, Text } from "@/components/ui";
+import { type JSONContent } from "@tiptap/core";
+import { Button } from "@/components/ui";
 import * as Editable from "@/components/ui/editable";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { IconDisplay } from "@/components/IconPicker";
+import { RichTextEditor } from "@/components/RichTextEditor";
 import { useRealmCategoryItem } from "@/hooks/useRealmCategoryItem";
 import { useUpdateRealmCategoryItemLabel } from "@/hooks/useUpdateRealmCategoryItemLabel";
+import { useUpdateRealmCategoryItemIcon } from "@/hooks/useUpdateRealmCategoryItemIcon";
+import { useUpdateRealmCategoryItemNotesText } from "@/hooks/useUpdateRealmCategoryItemNotesText";
 import { useDeleteRealmCategoryItem } from "@/hooks/useDeleteRealmCategoryItem";
 import { useRealmId } from "../../hooks/useRealmId";
 import { routes } from "@/routes/routes";
@@ -21,6 +26,8 @@ export function ItemPage() {
 
   const { item } = useRealmCategoryItem(itemId);
   const { updateLabel } = useUpdateRealmCategoryItemLabel(categoryId);
+  const { updateIcon } = useUpdateRealmCategoryItemIcon(categoryId);
+  const { updateNotesText } = useUpdateRealmCategoryItemNotesText(itemId);
   const { deleteItem } = useDeleteRealmCategoryItem(categoryId);
 
   const [labelValue, setLabelValue] = useState(item?.label ?? "");
@@ -30,6 +37,13 @@ export function ItemPage() {
       setLabelValue(item.label);
     }
   }, [item?.label]);
+
+  const handleSave = useCallback(
+    (content: JSONContent) => {
+      updateNotesText(content);
+    },
+    [updateNotesText],
+  );
 
   if (!item) {
     return null;
@@ -49,37 +63,61 @@ export function ItemPage() {
   }
 
   return (
-    <Box p={6} display="flex" flexDir="column" gap={4} w="full" key={itemId}>
-      <Box display="flex" alignItems="center" justifyContent="space-between">
-        <Editable.Root
-          value={labelValue}
-          onValueChange={(details) => setLabelValue(details.value)}
-          activationMode="dblclick"
-          onValueCommit={(details) => handleLabelCommit(details.value)}
-        >
-          <Editable.Area>
-            <Editable.Input
-              className={css({
-                fontSize: "2xl",
-                fontWeight: "semibold",
-                background: "transparent",
-                border: "none",
-                outline: "none",
-                p: 0,
-              })}
-            />
-            <Editable.Preview
-              className={css({
-                fontSize: "2xl",
-                fontWeight: "semibold",
-                cursor: "text",
-              })}
-            />
-          </Editable.Area>
-        </Editable.Root>
+    <Box
+      p={6}
+      pb={0}
+      display="flex"
+      flexDir="column"
+      flexGrow={1}
+      gap={4}
+      w="full"
+      key={itemId}
+      bg="gray.surface.bg"
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={3}
+        justifyContent="space-between"
+      >
+        <Box display="flex" alignItems="center" flex={1} minW={0}>
+          <IconDisplay
+            icon={item.icon}
+            defaultType="item"
+            onSelect={(icon) => updateIcon({ id: item.id, icon })}
+          />
+          <Editable.Root
+            value={labelValue}
+            onValueChange={(details) => setLabelValue(details.value)}
+            activationMode="dblclick"
+            onValueCommit={(details) => handleLabelCommit(details.value)}
+          >
+            <Editable.Area>
+              <Editable.Input
+                className={css({
+                  fontSize: "2xl",
+                  fontWeight: "semibold",
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  px: 2,
+                  py: 0,
+                })}
+              />
+              <Editable.Preview
+                className={css({
+                  px: 2,
+                  fontSize: "2xl",
+                  fontWeight: "semibold",
+                  cursor: "text",
+                })}
+              />
+            </Editable.Area>
+          </Editable.Root>
+        </Box>
 
         <ConfirmDialog
-          title={`Delete "${item.label}"?`}
+          title={`Delete "${item.label ?? "New Page"}"?`}
           description="This will permanently delete the item and cannot be undone."
           confirmLabel="Delete"
           destructive
@@ -92,11 +130,13 @@ export function ItemPage() {
         />
       </Box>
 
-      <Box>
-        <Text color="fg.muted" textStyle="sm">
-          Notes editor coming soon
-        </Text>
-      </Box>
+      <RichTextEditor
+        key={itemId}
+        itemId={itemId}
+        initialContent={item.notesText}
+        onSave={handleSave}
+        realmId={realmId}
+      />
     </Box>
   );
 }

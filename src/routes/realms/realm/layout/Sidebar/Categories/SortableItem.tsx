@@ -37,6 +37,9 @@ export function SortableItem(props: SortableItemProps) {
       <Box pl={4}>
         <NavItem
           label={item.label}
+          defaultLabel="New Page"
+          icon={item.icon}
+          defaultIconType="item"
           href={routes.item(realmId, categoryId, item.id)}
           onRename={(label) => updateLabel({ id: item.id, label })}
           onDelete={() => deleteItem(item.id)}

@@ -12,5 +12,3 @@ talehold.com
 realmplanner.com
 realmscriber.com
 realmto.me (realmtome)
-
-// TODO - remove alice

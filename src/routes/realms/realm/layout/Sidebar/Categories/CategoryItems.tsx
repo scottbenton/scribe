@@ -17,18 +17,15 @@ import { generateKeyBetween } from "fractional-indexing";
 import { useRealmCategoryItems } from "@/hooks/useRealmCategoryItems";
 import { useUpdateRealmCategoryItemOrder } from "@/hooks/useUpdateRealmCategoryItemOrder";
 import { useRealmId } from "../../../hooks/useRealmId";
-import { CreateItemDialog } from "./CreateItemDialog";
 import { SortableItem } from "./SortableItem";
 import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
 
 interface CategoryItemsProps {
   categoryId: string;
-  addItemOpen: boolean;
-  onAddItemOpenChange: (open: boolean) => void;
 }
 
 export function CategoryItems(props: CategoryItemsProps) {
-  const { categoryId, addItemOpen, onAddItemOpenChange } = props;
+  const { categoryId } = props;
   const realmId = useRealmId();
   const { items } = useRealmCategoryItems(categoryId);
   const { updateOrder } = useUpdateRealmCategoryItemOrder(categoryId);
@@ -85,31 +82,23 @@ export function CategoryItems(props: CategoryItemsProps) {
   }
 
   return (
-    <>
-      <DndContext
-        id={`category-items-dnd-${categoryId}`}
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
-          {localItems.map((item) => (
-            <SortableItem
-              key={item.id}
-              item={item}
-              categoryId={categoryId}
-              realmId={realmId}
-            />
-          ))}
-        </SortableContext>
-      </DndContext>
-
-      <CreateItemDialog
-        open={addItemOpen}
-        onOpenChange={onAddItemOpenChange}
-        categoryId={categoryId}
-      />
-    </>
+    <DndContext
+      id={`category-items-dnd-${categoryId}`}
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragOver={handleDragOver}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
+        {localItems.map((item) => (
+          <SortableItem
+            key={item.id}
+            item={item}
+            categoryId={categoryId}
+            realmId={realmId}
+          />
+        ))}
+      </SortableContext>
+    </DndContext>
   );
 }

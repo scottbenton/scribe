@@ -3,7 +3,7 @@ import { useListenToAuth } from "@/store/auth.store";
 import { PropsWithChildren } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 export function AppProviders(props: PropsWithChildren) {
   const { children } = props;

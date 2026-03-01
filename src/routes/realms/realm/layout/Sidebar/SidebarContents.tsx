@@ -8,12 +8,12 @@ export function SidebarContents() {
   return (
     <Box display="flex" flexDir="column" h="full" w="full">
       <Box flexGrow={1}>
-        <ScrollArea>
-          <Box>
-            <ChooseRealm />
+        <Box>
+          <ChooseRealm />
+          <ScrollArea>
             <Categories />
-          </Box>
-        </ScrollArea>
+          </ScrollArea>
+        </Box>
       </Box>
       <Box p={1} borderTopWidth={1} borderColor="border">
         <EditThemeButton />

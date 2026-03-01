@@ -5,6 +5,7 @@ import { Header } from "./Header";
 import { css } from "styled-system/css";
 import { ScrollArea } from "@/components/ui";
 import { RealmsProvider } from "./RealmsProvider";
+import { Box } from "styled-system/jsx";
 
 export function RealmLayout(props: PropsWithChildren) {
   const { children } = props;
@@ -20,21 +21,24 @@ export function RealmLayout(props: PropsWithChildren) {
           })}
         >
           <Sidebar />
-          <div className={css({ flexGrow: 1 })}>
+          <div
+            className={css({
+              flexGrow: 1,
+              display: "flex",
+              flexDirection: "column",
+            })}
+          >
             <Header />
-            <div>
+            <Box flexGrow={1} overflow="hidden">
               <ScrollArea.Root>
                 <ScrollArea.Viewport>
-                  <ScrollArea.Content>
-                    <div
-                      className={css({
-                        display: "flex",
-                        flex: 1,
-                        overflow: "hidden",
-                      })}
-                    >
-                      {children}
-                    </div>
+                  <ScrollArea.Content
+                    display="flex"
+                    flexGrow={1}
+                    flexDirection="column"
+                    position="relative"
+                  >
+                    {children}
                   </ScrollArea.Content>
                 </ScrollArea.Viewport>
                 <ScrollArea.Scrollbar>
@@ -42,7 +46,7 @@ export function RealmLayout(props: PropsWithChildren) {
                 </ScrollArea.Scrollbar>
                 <ScrollArea.Corner />
               </ScrollArea.Root>
-            </div>
+            </Box>
           </div>
         </div>
       </LayoutProvider>

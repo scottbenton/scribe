@@ -67,6 +67,7 @@ export function AuthPage() {
   };
 
   return (
+    <Box h="100vh" overflowY="auto">
     <Box
       display="flex"
       justifyContent="center"
@@ -193,6 +194,7 @@ export function AuthPage() {
           </Stack>
         </Box>
       )}
+    </Box>
     </Box>
   );
 }

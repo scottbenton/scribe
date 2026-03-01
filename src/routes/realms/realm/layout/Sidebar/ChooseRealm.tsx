@@ -6,6 +6,7 @@ import { routes } from "@/routes/routes";
 import { useRealmId } from "../../hooks/useRealmId";
 import { Box } from "styled-system/jsx";
 import { PlusIcon } from "lucide-react";
+import { Portal } from "@ark-ui/react";
 
 export function ChooseRealm() {
   const { realms, isLoading, error } = useUsersRealms();
@@ -38,49 +39,51 @@ export function ChooseRealm() {
           <Select.Indicator />
         </Select.Trigger>
       </Select.Control>
-      <Select.Positioner>
-        <Select.Content>
-          {isLoading && (
-            <Select.ItemGroup>
-              <Select.ItemGroupLabel>Loading...</Select.ItemGroupLabel>
-            </Select.ItemGroup>
-          )}
-          {error && (
-            <Select.ItemGroup>
-              <Select.ItemGroupLabel>
-                Failed to load realms
-              </Select.ItemGroupLabel>
-            </Select.ItemGroup>
-          )}
-          {!isLoading && !error && (
-            <Select.ItemGroup>
-              {collection.items.map((realm) => (
-                <Select.Item key={realm.id} item={realm}>
-                  <Select.ItemText>{realm.name}</Select.ItemText>
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.ItemGroup>
-          )}
-          <Select.Context>
-            {({ setOpen }) => (
+      <Portal>
+        <Select.Positioner>
+          <Select.Content>
+            {isLoading && (
               <Select.ItemGroup>
-                <Select.Item
-                  color="primary.surface.fg"
-                  item={{ value: "__create__", label: "Create Realm" }}
-                  onClick={() => {
-                    setOpen(false);
-                    navigate(routes.createRealm);
-                  }}
-                >
-                  <Select.ItemText>Create Realm</Select.ItemText>
-                  <PlusIcon />
-                </Select.Item>
+                <Select.ItemGroupLabel>Loading...</Select.ItemGroupLabel>
               </Select.ItemGroup>
             )}
-          </Select.Context>
-        </Select.Content>
-      </Select.Positioner>
+            {error && (
+              <Select.ItemGroup>
+                <Select.ItemGroupLabel>
+                  Failed to load realms
+                </Select.ItemGroupLabel>
+              </Select.ItemGroup>
+            )}
+            {!isLoading && !error && (
+              <Select.ItemGroup>
+                {collection.items.map((realm) => (
+                  <Select.Item key={realm.id} item={realm}>
+                    <Select.ItemText>{realm.name}</Select.ItemText>
+                    <Select.ItemIndicator />
+                  </Select.Item>
+                ))}
+              </Select.ItemGroup>
+            )}
+            <Select.Context>
+              {({ setOpen }) => (
+                <Select.ItemGroup>
+                  <Select.Item
+                    color="primary.surface.fg"
+                    item={{ value: "__create__", label: "Create Realm" }}
+                    onClick={() => {
+                      setOpen(false);
+                      navigate(routes.createRealm);
+                    }}
+                  >
+                    <Select.ItemText>Create Realm</Select.ItemText>
+                    <PlusIcon />
+                  </Select.Item>
+                </Select.ItemGroup>
+              )}
+            </Select.Context>
+          </Select.Content>
+        </Select.Positioner>
+      </Portal>
       <Select.HiddenSelect />
     </Select.Root>
   );

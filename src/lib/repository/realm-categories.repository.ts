@@ -1,4 +1,5 @@
 import { IRealmCategory } from "@/types/realm-categories.type";
+import { type IconConfig } from "@/types/icon-config.type";
 import { supabase } from "../supabase.lib";
 
 export class RealmCategoriesRepository {
@@ -20,14 +21,15 @@ export class RealmCategoriesRepository {
     return data.map((row) => ({
       id: row.id,
       realmId: row.realm_id,
-      name: row.name,
+      label: row.label ?? undefined,
       order: row.order,
+      icon: (row.icon as IconConfig | null) ?? null,
       createdAt: new Date(row.created_at),
     }));
   }
 
-  public static async updateName(id: string, name: string): Promise<void> {
-    const { error } = await this.table().update({ name }).eq("id", id);
+  public static async updateName(id: string, label: string): Promise<void> {
+    const { error } = await this.table().update({ label }).eq("id", id);
 
     if (error) {
       console.error(error);
@@ -44,13 +46,24 @@ export class RealmCategoriesRepository {
     }
   }
 
+  public static async updateIcon(
+    id: string,
+    icon: IconConfig | null,
+  ): Promise<void> {
+    const { error } = await this.table().update({ icon: icon as any }).eq("id", id);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Failed to update realm category icon");
+    }
+  }
+
   public static async createCategory(
     realmId: string,
-    name: string,
     order: string,
   ): Promise<IRealmCategory> {
     const { data, error } = await this.table()
-      .insert({ realm_id: realmId, name, order })
+      .insert({ realm_id: realmId, order })
       .select()
       .single();
 
@@ -62,8 +75,9 @@ export class RealmCategoriesRepository {
     return {
       id: data.id,
       realmId: data.realm_id,
-      name: data.name,
+      label: data.label ?? undefined,
       order: data.order,
+      icon: (data.icon as IconConfig | null) ?? null,
       createdAt: new Date(data.created_at),
     };
   }
