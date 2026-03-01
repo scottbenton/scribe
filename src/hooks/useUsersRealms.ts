@@ -1,6 +1,8 @@
-import { RealmsRepository } from "@/lib/repository/realms.repository";
-import { useUID } from "@/store/auth.store";
 import { useQuery } from "@tanstack/react-query";
+
+import { RealmsRepository } from "@/lib/repository/realms.repository";
+
+import { useUID } from "@/store/auth.store";
 
 export function useUsersRealms() {
   const uid = useUID();

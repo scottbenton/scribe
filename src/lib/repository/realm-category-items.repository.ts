@@ -1,9 +1,12 @@
+import { type JSONContent } from "@tiptap/core";
+
+import { type IconConfig } from "@/types/icon-config.type";
 import {
   IRealmCategoryItem,
   IRealmCategoryItemDetail,
 } from "@/types/realm-category-items.type";
-import { type IconConfig } from "@/types/icon-config.type";
-import { type JSONContent } from "@tiptap/core";
+import { Json } from "@/types/supabase.type";
+
 import { supabase } from "../supabase.lib";
 
 export class RealmCategoryItemsRepository {
@@ -22,7 +25,7 @@ export class RealmCategoryItemsRepository {
       throw new Error("Failed to fetch realm category items");
     }
 
-    return data.map((row: any) => ({
+    return data.map((row) => ({
       id: row.id,
       categoryId: row.category_id,
       label: row.label ?? undefined,
@@ -45,7 +48,7 @@ export class RealmCategoryItemsRepository {
       throw new Error("Failed to fetch realm category item");
     }
 
-    const row = data as any;
+    const row = data;
     return {
       id: row.id,
       categoryId: row.category_id,
@@ -53,8 +56,8 @@ export class RealmCategoryItemsRepository {
       order: row.order,
       icon: (row.icon as IconConfig | null) ?? null,
       createdAt: new Date(row.created_at),
-      notesText: row.notes ?? null,
-      fieldContents: row.field_contents ?? {},
+      notesText: (row.notes as unknown as JSONContent) ?? null,
+      fieldContents: (row.field_contents as Record<string, unknown>) ?? {},
     };
   }
 
@@ -72,7 +75,7 @@ export class RealmCategoryItemsRepository {
       throw new Error("Failed to create realm category item");
     }
 
-    const row = data as any;
+    const row = data;
     return {
       id: row.id,
       categoryId: row.category_id,
@@ -106,7 +109,7 @@ export class RealmCategoryItemsRepository {
     icon: IconConfig | null,
   ): Promise<void> {
     const { error } = await this.table()
-      .update({ icon: icon as any })
+      .update({ icon: icon as unknown as Json })
       .eq("id", id);
 
     if (error) {

@@ -1,18 +1,21 @@
-import { useEffect, useMemo, useRef } from "react";
-import { generateText, type JSONContent } from "@tiptap/core";
-import { useEditor, EditorContent } from "@tiptap/react";
-import { StarterKit } from "@tiptap/starter-kit";
-import { Underline } from "@tiptap/extension-underline";
+import { type JSONContent, generateText } from "@tiptap/core";
 import { Highlight } from "@tiptap/extension-highlight";
-import { TaskList } from "@tiptap/extension-task-list";
-import { TaskItem } from "@tiptap/extension-task-item";
 import { Link } from "@tiptap/extension-link";
-import { RealmCategoryItemsRepository } from "@/lib/repository/realm-category-items.repository";
-import { useAuthStore } from "@/store/auth.store";
-import { Toolbar } from "./Toolbar";
-import { createItemMentionExtension } from "./ItemMentionExtension";
-import { Box } from "styled-system/jsx";
+import { TaskItem } from "@tiptap/extension-task-item";
+import { TaskList } from "@tiptap/extension-task-list";
+import { Underline } from "@tiptap/extension-underline";
+import { EditorContent, useEditor } from "@tiptap/react";
+import { StarterKit } from "@tiptap/starter-kit";
+import { useEffect, useMemo, useRef } from "react";
 import { css } from "styled-system/css";
+import { Box } from "styled-system/jsx";
+
+import { RealmCategoryItemsRepository } from "@/lib/repository/realm-category-items.repository";
+
+import { useAuthStore } from "@/store/auth.store";
+
+import { createItemMentionExtension } from "./ItemMentionExtension";
+import { Toolbar } from "./Toolbar";
 
 export interface RichTextEditorProps {
   itemId: string;
@@ -113,6 +116,7 @@ export function RichTextEditor({
   const isDirty = useRef(false);
   const contentRef = useRef<JSONContent>({});
   const onSaveRef = useRef(onSave);
+  // eslint-disable-next-line react-hooks/refs
   onSaveRef.current = onSave;
 
   const extensions = useMemo(() => {

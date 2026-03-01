@@ -1,10 +1,13 @@
+import { FileText, Folder } from "lucide-react";
 import { useState } from "react";
-import { Folder, FileText } from "lucide-react";
+
 import { GameIcon } from "@/components/GameIconSelector/GameIcon";
+
 import { type IconConfig } from "@/types/icon-config.type";
-import { resolveIconColor } from "./iconColors";
-import { IconPickerDialog } from "./IconPickerDialog";
+
 import { Icon, IconButton, IconProps } from "../ui";
+import { IconPickerDialog } from "./IconPickerDialog";
+import { resolveIconColor } from "./iconColors";
 
 interface IconDisplayProps extends Omit<IconProps, "onSelect"> {
   icon: IconConfig | null;

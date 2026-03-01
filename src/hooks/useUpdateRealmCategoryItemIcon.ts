@@ -1,7 +1,9 @@
-import { RealmCategoryItemsRepository } from "@/lib/repository/realm-category-items.repository";
-import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
-import { type IconConfig } from "@/types/icon-config.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { type IconConfig } from "@/types/icon-config.type";
+import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
+
+import { RealmCategoryItemsRepository } from "@/lib/repository/realm-category-items.repository";
 
 export function useUpdateRealmCategoryItemIcon(categoryId: string) {
   const queryClient = useQueryClient();
@@ -20,7 +22,7 @@ export function useUpdateRealmCategoryItemIcon(categoryId: string) {
       queryClient.setQueryData<IRealmCategoryItem[]>(queryKey, (old) =>
         old ? old.map((i) => (i.id === id ? { ...i, icon } : i)) : old,
       );
-      queryClient.setQueryData(itemQueryKey, (old: any) =>
+      queryClient.setQueryData(itemQueryKey, (old) =>
         old ? { ...old, icon } : old,
       );
       return { previous, previousItem, itemQueryKey };

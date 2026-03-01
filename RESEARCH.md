@@ -11,10 +11,10 @@ TipTap stores content as a ProseMirror JSON document (the "doc" format). To sear
 TipTap's schema gives you a `generateText` utility:
 
 ```ts
-import { generateText } from '@tiptap/core'
-import StarterKit from '@tiptap/starter-kit'
+import { generateText } from "@tiptap/core";
+import StarterKit from "@tiptap/starter-kit";
 
-const plainText = generateText(tipTapJsonDoc, [StarterKit])
+const plainText = generateText(tipTapJsonDoc, [StarterKit]);
 ```
 
 Store both the raw JSON (for rendering) and the extracted plain text (for searching) in the DB. Regenerate the text whenever the document is saved.
@@ -35,6 +35,7 @@ CREATE VIRTUAL TABLE notes_fts USING fts5(
 ```
 
 Gives you:
+
 - Word-boundary tokenization (not just substring)
 - `MATCH 'goblin*'` for prefix matching
 - `rank` column for relevance ordering
@@ -90,43 +91,48 @@ Users pick their vault folder once (like Obsidian), and you store that path. No 
 Two options:
 
 #### Option A: Origin Private File System (OPFS)
+
 - A sandboxed, browser-managed filesystem — no user picker, no visible path
 - Very fast, works in all modern browsers including Safari
 - Data is tied to the origin (your domain) — users can't easily browse or back it up
 - Good for app-internal storage, bad for "I want to own my files"
 
 #### Option B: File System Access API (Directory picker)
+
 ```js
-const dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' })
+const dirHandle = await window.showDirectoryPicker({ mode: "readwrite" });
 ```
+
 - Shows a native OS folder picker — user explicitly grants access to a real directory
 - Permission persists for the session, but **not across page reloads by default**
 - You can store the `FileSystemDirectoryHandle` in IndexedDB and call `requestPermission()` on it next visit — the browser will prompt a small re-authorization (not a full picker)
 - **Safari support is limited** — read permission works, but persistent write access and `requestPermission()` are unreliable
 
 #### The Cross-Reload Permission Dance (Web)
+
 ```js
 // On startup, retrieve stored handle from IndexedDB
-const handle = await getStoredHandle()
+const handle = await getStoredHandle();
 if (handle) {
-  const perm = await handle.queryPermission({ mode: 'readwrite' })
-  if (perm !== 'granted') {
+  const perm = await handle.queryPermission({ mode: "readwrite" });
+  if (perm !== "granted") {
     // Must be triggered by a user gesture
-    await handle.requestPermission({ mode: 'readwrite' })
+    await handle.requestPermission({ mode: "readwrite" });
   }
 }
 ```
+
 This requires a user gesture (button click) to re-prompt — you can't silently re-acquire on load.
 
 ### Comparison
 
-| | Tauri | Web |
-|---|---|---|
-| Folder picker | Native dialog, no friction | `showDirectoryPicker()` |
-| Persistence | Store path in app config | Store handle in IndexedDB + re-prompt |
-| Images | Read/write freely | Read/write via handle API |
-| Safari | N/A | Unreliable for write access |
-| User owns files | Yes | Yes (Option B) |
+|                 | Tauri                      | Web                                   |
+| --------------- | -------------------------- | ------------------------------------- |
+| Folder picker   | Native dialog, no friction | `showDirectoryPicker()`               |
+| Persistence     | Store path in app config   | Store handle in IndexedDB + re-prompt |
+| Images          | Read/write freely          | Read/write via handle API             |
+| Safari          | N/A                        | Unreliable for write access           |
+| User owns files | Yes                        | Yes (Option B)                        |
 
 ### Recommendation
 

@@ -1,24 +1,25 @@
-import { useRef, useState } from "react";
-import { useEditorState, type Editor } from "@tiptap/react";
 import { createListCollection } from "@ark-ui/react/select";
+import { type Editor, useEditorState } from "@tiptap/react";
 import {
+  AtSign,
   Bold,
-  Italic,
-  Underline,
-  Strikethrough,
   Highlighter,
+  Italic,
   Link,
   List,
-  ListOrdered,
   ListChecks,
+  ListOrdered,
   Quote,
-  AtSign,
+  Strikethrough,
+  Underline,
 } from "lucide-react";
-import { IconButton, Input } from "@/components/ui";
-import * as Select from "@/components/ui/select";
-import * as Popover from "@/components/ui/popover";
-import { Box } from "styled-system/jsx";
+import { useRef, useState } from "react";
 import { css } from "styled-system/css";
+import { Box } from "styled-system/jsx";
+
+import { IconButton, Input } from "@/components/ui";
+import * as Popover from "@/components/ui/popover";
+import * as Select from "@/components/ui/select";
 
 const HEADING_OPTIONS = [
   { label: "Paragraph", value: "0" },

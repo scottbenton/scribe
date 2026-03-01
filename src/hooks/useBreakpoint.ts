@@ -1,5 +1,5 @@
-import { token } from "styled-system/tokens";
 import { useEffect, useRef, useState } from "react";
+import { token } from "styled-system/tokens";
 
 type Breakpoint = "sm" | "md" | "lg" | "xl" | "2xl";
 

@@ -1,17 +1,21 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { css } from "styled-system/css";
+import { Box } from "styled-system/jsx";
 import { useLocation, useParams } from "wouter";
-import { Button } from "@/components/ui";
-import * as Editable from "@/components/ui/editable";
+
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { IconDisplay } from "@/components/IconPicker";
-import { useRealmCategories } from "@/hooks/useRealmCategories";
-import { useUpdateRealmCategoryName } from "@/hooks/useUpdateRealmCategoryName";
-import { useUpdateRealmCategoryIcon } from "@/hooks/useUpdateRealmCategoryIcon";
-import { useDeleteRealmCategory } from "@/hooks/useDeleteRealmCategory";
-import { useRealmId } from "../hooks/useRealmId";
+import { Button } from "@/components/ui";
+import * as Editable from "@/components/ui/editable";
+
 import { routes } from "@/routes/routes";
-import { Box } from "styled-system/jsx";
-import { css } from "styled-system/css";
+
+import { useDeleteRealmCategory } from "@/hooks/useDeleteRealmCategory";
+import { useRealmCategories } from "@/hooks/useRealmCategories";
+import { useUpdateRealmCategoryIcon } from "@/hooks/useUpdateRealmCategoryIcon";
+import { useUpdateRealmCategoryName } from "@/hooks/useUpdateRealmCategoryName";
+
+import { useRealmId } from "../hooks/useRealmId";
 
 export function CategoryPage() {
   const realmId = useRealmId();
@@ -30,6 +34,7 @@ export function CategoryPage() {
   // Sync when the category name changes externally (e.g. renamed from sidebar)
   useEffect(() => {
     if (category?.label !== undefined) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setNameValue(category.label);
     }
   }, [category?.label]);
@@ -60,12 +65,16 @@ export function CategoryPage() {
       w="full"
       key={categoryId}
     >
-      <Box display="flex" alignItems="center" gap={3} justifyContent="space-between">
+      <Box
+        display="flex"
+        alignItems="center"
+        gap={3}
+        justifyContent="space-between"
+      >
         <Box display="flex" alignItems="center" gap={3} flex={1} minW={0}>
           <IconDisplay
             icon={category.icon}
             defaultType="category"
-            size={32}
             onSelect={(icon) => updateIcon({ id: category.id, icon })}
           />
           <Editable.Root

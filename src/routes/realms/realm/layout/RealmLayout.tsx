@@ -1,11 +1,13 @@
 import { PropsWithChildren } from "react";
-import { Sidebar } from "./Sidebar";
-import { LayoutProvider } from "./LayoutProvider";
-import { Header } from "./Header";
 import { css } from "styled-system/css";
-import { ScrollArea } from "@/components/ui";
-import { RealmsProvider } from "./RealmsProvider";
 import { Box } from "styled-system/jsx";
+
+import { ScrollArea } from "@/components/ui";
+
+import { Header } from "./Header";
+import { LayoutProvider } from "./LayoutProvider";
+import { RealmsProvider } from "./RealmsProvider";
+import { Sidebar } from "./Sidebar";
 
 export function RealmLayout(props: PropsWithChildren) {
   const { children } = props;

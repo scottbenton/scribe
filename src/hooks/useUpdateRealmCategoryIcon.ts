@@ -1,7 +1,9 @@
-import { RealmCategoriesRepository } from "@/lib/repository/realm-categories.repository";
-import { type IRealmCategory } from "@/types/realm-categories.type";
-import { type IconConfig } from "@/types/icon-config.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { type IconConfig } from "@/types/icon-config.type";
+import { type IRealmCategory } from "@/types/realm-categories.type";
+
+import { RealmCategoriesRepository } from "@/lib/repository/realm-categories.repository";
 
 export function useUpdateRealmCategoryIcon(realmId: string) {
   const queryClient = useQueryClient();

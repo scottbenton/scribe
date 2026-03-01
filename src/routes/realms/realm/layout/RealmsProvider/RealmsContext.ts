@@ -1,5 +1,6 @@
-import { IRealm } from "@/types/realms.type";
 import { createContext } from "react";
+
+import { IRealm } from "@/types/realms.type";
 
 interface IRealmsContext {
   realms: Record<string, IRealm>;

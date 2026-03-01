@@ -1,9 +1,12 @@
 import { ReactRenderer } from "@tiptap/react";
 import type { SuggestionOptions } from "@tiptap/suggestion";
 import tippy, { type Instance as TippyInstance } from "tippy.js";
-import { queryClient } from "@/context/AppProviders";
+
+import { queryClient } from "@/context/TanstackQueryProvider";
+
 import { type IRealmCategory } from "@/types/realm-categories.type";
 import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
+
 import { SuggestionList, type SuggestionListRef } from "./SuggestionList";
 
 export interface MentionItem {

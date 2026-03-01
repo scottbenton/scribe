@@ -1,10 +1,12 @@
-import { PaletteIcon } from "lucide-react";
-import * as Popover from "@/components/ui/popover";
-import { IconButton } from "../ui";
 import { Portal } from "@ark-ui/react";
-import { ColorModePicker } from "./ColorModePicker";
+import { PaletteIcon } from "lucide-react";
+
+import * as Popover from "@/components/ui/popover";
+
+import { IconButton } from "../ui";
 import { AccentColorPicker } from "./AccentColorPicker";
 import { BorderRadiusPicker } from "./BorderRadiusPicker";
+import { ColorModePicker } from "./ColorModePicker";
 import { FontPicker } from "./FontPicker";
 
 export function EditThemeButton() {

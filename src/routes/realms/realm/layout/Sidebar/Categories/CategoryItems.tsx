@@ -1,24 +1,27 @@
-import { useState, useEffect, useMemo } from "react";
 import {
   DndContext,
-  closestCenter,
-  PointerSensor,
-  useSensor,
-  useSensors,
   type DragEndEvent,
   type DragOverEvent,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import {
   SortableContext,
-  verticalListSortingStrategy,
   arrayMove,
+  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { generateKeyBetween } from "fractional-indexing";
+import { useEffect, useMemo, useState } from "react";
+
+import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
+
 import { useRealmCategoryItems } from "@/hooks/useRealmCategoryItems";
 import { useUpdateRealmCategoryItemOrder } from "@/hooks/useUpdateRealmCategoryItemOrder";
+
 import { useRealmId } from "../../../hooks/useRealmId";
 import { SortableItem } from "./SortableItem";
-import { type IRealmCategoryItem } from "@/types/realm-category-items.type";
 
 interface CategoryItemsProps {
   categoryId: string;
@@ -33,6 +36,7 @@ export function CategoryItems(props: CategoryItemsProps) {
 
   useEffect(() => {
     if (items) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLocalItems(items);
     }
   }, [items]);

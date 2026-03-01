@@ -1,6 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
-import { getEnvVarOrThrow } from "./env.lib";
+
 import { Database } from "@/types/supabase.type";
+
+import { getEnvVarOrThrow } from "./env.lib";
 
 const SUPABASE_URL = getEnvVarOrThrow("VITE_SUPABASE_URL");
 const SUPABASE_PUBLISHABLE_KEY = getEnvVarOrThrow(

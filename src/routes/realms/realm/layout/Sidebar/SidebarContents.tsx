@@ -1,8 +1,10 @@
-import { EditThemeButton } from "@/components/theme/EditThemeButton";
-import { ScrollArea } from "@/components/ScrollArea";
 import { Box } from "styled-system/jsx";
-import { ChooseRealm } from "./ChooseRealm";
+
+import { ScrollArea } from "@/components/ScrollArea";
+import { EditThemeButton } from "@/components/theme/EditThemeButton";
+
 import { Categories } from "./Categories";
+import { ChooseRealm } from "./ChooseRealm";
 
 export function SidebarContents() {
   return (

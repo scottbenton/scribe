@@ -3,7 +3,7 @@ import type { Assign, SelectRootProps } from "@ark-ui/react";
 import { ark } from "@ark-ui/react/factory";
 import { Select, useSelectItemContext } from "@ark-ui/react/select";
 import { CheckIcon, ChevronDownIcon } from "lucide-react";
-import { forwardRef, type RefAttributes } from "react";
+import { type RefAttributes, forwardRef } from "react";
 import { createStyleContext } from "styled-system/jsx";
 import { type SelectVariantProps, select } from "styled-system/recipes";
 import type { HTMLStyledProps } from "styled-system/types";

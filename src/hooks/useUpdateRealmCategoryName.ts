@@ -1,5 +1,6 @@
-import { RealmCategoriesRepository } from "@/lib/repository/realm-categories.repository";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import { RealmCategoriesRepository } from "@/lib/repository/realm-categories.repository";
 
 export function useUpdateRealmCategoryName(realmId: string) {
   const queryClient = useQueryClient();
@@ -8,7 +9,9 @@ export function useUpdateRealmCategoryName(realmId: string) {
     mutationFn: ({ id, name }: { id: string; name: string }) =>
       RealmCategoriesRepository.updateName(id, name),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["realm-categories", realmId] });
+      queryClient.invalidateQueries({
+        queryKey: ["realm-categories", realmId],
+      });
     },
   });
 

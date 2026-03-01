@@ -1,8 +1,7 @@
-import { useState, useEffect, type ComponentType } from "react";
-import { Box } from "styled-system/jsx";
+import { useEffect, useState } from "react";
 import type { IconType } from "react-icons/lib";
+
 import { Icon, IconProps } from "../ui";
-import { css } from "styled-system/css";
 
 interface GameIconProps extends IconProps {
   iconKey: string;

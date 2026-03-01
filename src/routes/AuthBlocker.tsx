@@ -1,6 +1,7 @@
-import { AuthStatus, useAuthStore } from "@/store/auth.store";
-import { useMemo, type PropsWithChildren } from "react";
+import { type PropsWithChildren, useMemo } from "react";
 import { Redirect, useLocation, useSearchParams } from "wouter";
+
+import { AuthStatus, useAuthStore } from "@/store/auth.store";
 
 export interface AuthBlockerProps {
   redirectIfUnauthenticated?: string;

@@ -15,7 +15,11 @@
     "supabase:reset-db": "supabase db reset",
     "supabase:gen-types": "supabase gen types typescript --local  > ./src/types/supabase.type.ts",
     "supabase:create-db-script": "supabase db diff --schema public -f changes",
-    "supabase:create-empty-script": "supabase migration new changes"
+    "supabase:create-empty-script": "supabase migration new changes",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@ark-ui/react": "^5.31.0",
@@ -65,13 +69,22 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.3",
     "@pandacss/dev": "^1.8.1",
     "@tauri-apps/cli": "^2",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
+    "eslint": "^9.39.3",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "jiti": "^2.6.1",
+    "prettier": "^3.8.1",
     "supabase": "^2.76.8",
     "typescript": "~5.8.3",
+    "typescript-eslint": "^8.56.1",
     "vite": "^7.0.4",
     "vite-tsconfig-paths": "^6.1.1"
   }

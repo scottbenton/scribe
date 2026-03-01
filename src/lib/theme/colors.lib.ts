@@ -1,4 +1,5 @@
 import * as colorPalette from "@/theme/colors";
+
 import { updateThemeSettings } from "./storage.lib";
 
 type ColorDef = typeof colorPalette.amber | typeof colorPalette.neutral;

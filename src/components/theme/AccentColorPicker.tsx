@@ -1,7 +1,9 @@
-import { useState } from "react";
 import { createListCollection } from "@ark-ui/react/select";
+import { useState } from "react";
 import { css } from "styled-system/css";
+
 import { ColorKey, colors, getThemeSettings, setColor } from "@/lib/theme";
+
 import { Select } from "../ui";
 
 const accentColorItems: { label: string; value: string }[] = Object.values(

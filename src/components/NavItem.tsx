@@ -1,17 +1,19 @@
-import { useState } from "react";
-import { Link } from "wouter";
-import { GripVertical, Plus, Folder, FileText } from "lucide-react";
 import { Portal } from "@ark-ui/react/portal";
-import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import type { DraggableAttributes } from "@dnd-kit/core";
-import * as Editable from "@/components/ui/editable";
-import * as Menu from "@/components/ui/menu";
-import { ConfirmDialog } from "@/components/ConfirmDialog";
-import { GameIcon } from "@/components/GameIconSelector/GameIcon";
-import { type IconConfig } from "@/types/icon-config.type";
-import { resolveIconColor } from "@/components/IconPicker/iconColors";
+import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { FileText, Folder, GripVertical, Plus } from "lucide-react";
+import { useState } from "react";
 import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
+import { Link } from "wouter";
+
+import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { GameIcon } from "@/components/GameIconSelector/GameIcon";
+import { resolveIconColor } from "@/components/IconPicker/iconColors";
+import * as Editable from "@/components/ui/editable";
+import * as Menu from "@/components/ui/menu";
+
+import { type IconConfig } from "@/types/icon-config.type";
 
 export interface NavItemContextMenuItem {
   label: string;
@@ -100,10 +102,12 @@ export function NavItem(props: NavItemProps) {
               display="flex"
               alignItems="center"
               flexShrink={0}
-              style={{ color: icon ? resolveIconColor(icon.color) : "currentColor" }}
+              style={{
+                color: icon ? resolveIconColor(icon.color) : "currentColor",
+              }}
             >
               {icon ? (
-                <GameIcon iconKey={icon.key} size={14} />
+                <GameIcon iconKey={icon.key} />
               ) : defaultIconType === "category" ? (
                 <Folder size={14} />
               ) : (
@@ -172,29 +176,29 @@ export function NavItem(props: NavItemProps) {
         <Portal>
           <Menu.Positioner>
             <Menu.Content>
-            <Menu.Item value="rename" onSelect={() => setIsRenaming(true)}>
-              <Menu.ItemText>Rename</Menu.ItemText>
-            </Menu.Item>
-            {contextMenuItems.map((item) => (
-              <Menu.Item
-                key={item.label}
-                value={item.label}
-                onSelect={item.onSelect}
-                className={
-                  item.destructive ? css({ color: "red.500" }) : undefined
-                }
-              >
-                <Menu.ItemText>{item.label}</Menu.ItemText>
+              <Menu.Item value="rename" onSelect={() => setIsRenaming(true)}>
+                <Menu.ItemText>Rename</Menu.ItemText>
               </Menu.Item>
-            ))}
-            <Menu.Separator />
-            <Menu.Item
-              value="delete"
-              onSelect={() => setDeleteOpen(true)}
-              className={css({ color: "red.500" })}
-            >
-              <Menu.ItemText>Delete</Menu.ItemText>
-            </Menu.Item>
+              {contextMenuItems.map((item) => (
+                <Menu.Item
+                  key={item.label}
+                  value={item.label}
+                  onSelect={item.onSelect}
+                  className={
+                    item.destructive ? css({ color: "red.500" }) : undefined
+                  }
+                >
+                  <Menu.ItemText>{item.label}</Menu.ItemText>
+                </Menu.Item>
+              ))}
+              <Menu.Separator />
+              <Menu.Item
+                value="delete"
+                onSelect={() => setDeleteOpen(true)}
+                className={css({ color: "red.500" })}
+              >
+                <Menu.ItemText>Delete</Menu.ItemText>
+              </Menu.Item>
             </Menu.Content>
           </Menu.Positioner>
         </Portal>

@@ -19,7 +19,7 @@ const DEFAULT_THEME_SETTINGS: ThemeSettings = {
 const LOCAL_STORAGE_KEY = "theme-settings";
 
 export function getThemeSettings(): ThemeSettings {
-  let settings = { ...DEFAULT_THEME_SETTINGS };
+  const settings = { ...DEFAULT_THEME_SETTINGS };
 
   const localStorageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
 
@@ -34,13 +34,13 @@ export function getThemeSettings(): ThemeSettings {
       const parsedFont = parsedSettings.font;
       const parsedMode = parsedSettings.mode;
 
-      if (colorTokens.hasOwnProperty(parsedAccentColor)) {
+      if (Object.hasOwnProperty.call(colorTokens, parsedAccentColor)) {
         settings.accentColor = parsedAccentColor;
       }
-      if (radii.hasOwnProperty(parsedRadius)) {
+      if (Object.hasOwnProperty.call(radii, parsedRadius)) {
         settings.radius = parsedRadius;
       }
-      if (fontMap.hasOwnProperty(parsedFont)) {
+      if (Object.hasOwnProperty.call(fontMap, parsedFont)) {
         settings.font = parsedFont;
       }
       if (parsedMode === "light" || parsedMode === "dark") {
