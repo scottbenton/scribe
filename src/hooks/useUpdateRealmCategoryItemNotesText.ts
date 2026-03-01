@@ -7,8 +7,12 @@ export function useUpdateRealmCategoryItemNotesText(itemId: string) {
   const queryClient = useQueryClient();
 
   const { mutate, isPending, isError } = useMutation({
-    mutationFn: (notesText: JSONContent) =>
-      RealmCategoryItemsRepository.updateNotesText(itemId, notesText),
+    mutationFn: (params: { notes: JSONContent; notesText: string }) =>
+      RealmCategoryItemsRepository.updateNotesText(
+        itemId,
+        params.notes,
+        params.notesText,
+      ),
     onSuccess: (_data, notesText) => {
       queryClient.setQueryData<IRealmCategoryItemDetail>(
         ["realm-category-item", itemId],

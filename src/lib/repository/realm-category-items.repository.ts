@@ -7,8 +7,7 @@ import { type JSONContent } from "@tiptap/core";
 import { supabase } from "../supabase.lib";
 
 export class RealmCategoryItemsRepository {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private static table = () => supabase.from("realm_category_items" as any);
+  private static table = () => supabase.from("realm_category_items");
 
   public static async getAllInCategory(
     categoryId: string,
@@ -35,7 +34,9 @@ export class RealmCategoryItemsRepository {
 
   public static async getItem(id: string): Promise<IRealmCategoryItemDetail> {
     const { data, error } = await this.table()
-      .select("*")
+      .select(
+        "id, category_id, label, order, icon, field_contents, notes, created_at",
+      )
       .eq("id", id)
       .single();
 
@@ -52,7 +53,7 @@ export class RealmCategoryItemsRepository {
       order: row.order,
       icon: (row.icon as IconConfig | null) ?? null,
       createdAt: new Date(row.created_at),
-      notesText: row.notes_text ?? null,
+      notesText: row.notes ?? null,
       fieldContents: row.field_contents ?? {},
     };
   }
@@ -104,7 +105,9 @@ export class RealmCategoryItemsRepository {
     id: string,
     icon: IconConfig | null,
   ): Promise<void> {
-    const { error } = await this.table().update({ icon: icon as any }).eq("id", id);
+    const { error } = await this.table()
+      .update({ icon: icon as any })
+      .eq("id", id);
 
     if (error) {
       console.error(error);
@@ -114,10 +117,11 @@ export class RealmCategoryItemsRepository {
 
   public static async updateNotesText(
     id: string,
-    notesText: JSONContent,
+    notes: JSONContent,
+    notesText: string,
   ): Promise<void> {
     const { error } = await this.table()
-      .update({ notes_text: notesText as any })
+      .update({ notes, notes_text: notesText })
       .eq("id", id);
 
     if (error) {
@@ -128,7 +132,8 @@ export class RealmCategoryItemsRepository {
 
   public static updateNotesTextBeacon(
     id: string,
-    notesText: JSONContent,
+    notes: JSONContent,
+    notesText: string,
     token: string,
   ): void {
     const url = `${import.meta.env.VITE_SUPABASE_URL}/rest/v1/realm_category_items?id=eq.${id}`;
@@ -140,7 +145,7 @@ export class RealmCategoryItemsRepository {
         Apikey: import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
         Prefer: "return=minimal",
       },
-      body: JSON.stringify({ notes_text: notesText }),
+      body: JSON.stringify({ notes, notes_text: notesText }),
       keepalive: true,
     });
   }

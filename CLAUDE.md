@@ -14,6 +14,7 @@ TTRPG note-taking app built with Tauri, React, Typescript, PandaCSS, and Ark UI.
 
 ## Conventions
 
+- Never use `any` in TypeScript. Use proper types, `unknown`, or generics instead.
 - One component per file.
 - File name should match the component/main function name in PascalCase (e.g., `AccentColorPicker` → `AccentColorPicker.tsx`). For files with multiple exports, use a generic name with a suffix like `.lib.ts`, `.types.ts`, etc.
 - Always use function components. Don't destructure props in the arguments:

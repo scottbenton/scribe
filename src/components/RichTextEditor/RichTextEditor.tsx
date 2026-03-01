@@ -1,5 +1,5 @@
-import { useEffect, useRef } from "react";
-import { type JSONContent } from "@tiptap/core";
+import { useEffect, useMemo, useRef } from "react";
+import { generateText, type JSONContent } from "@tiptap/core";
 import { useEditor, EditorContent } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 import { Underline } from "@tiptap/extension-underline";
@@ -17,7 +17,7 @@ import { css } from "styled-system/css";
 export interface RichTextEditorProps {
   itemId: string;
   initialContent: JSONContent | null;
-  onSave: (content: JSONContent) => void;
+  onSave: (content: JSONContent, text: string) => void;
   realmId: string;
 }
 
@@ -115,8 +115,8 @@ export function RichTextEditor({
   const onSaveRef = useRef(onSave);
   onSaveRef.current = onSave;
 
-  const editor = useEditor({
-    extensions: [
+  const extensions = useMemo(() => {
+    return [
       StarterKit.configure({
         heading: { levels: [2, 3, 4, 5, 6] },
       }),
@@ -132,7 +132,11 @@ export function RichTextEditor({
         },
       }),
       createItemMentionExtension(realmId),
-    ],
+    ];
+  }, [realmId]);
+
+  const editor = useEditor({
+    extensions,
     content: initialContent ?? undefined,
     onUpdate({ editor }) {
       isDirty.current = true;
@@ -144,21 +148,27 @@ export function RichTextEditor({
   useEffect(() => {
     const interval = setInterval(() => {
       if (isDirty.current) {
-        onSaveRef.current(contentRef.current);
+        onSaveRef.current(
+          contentRef.current,
+          generateText(contentRef.current, extensions),
+        );
         isDirty.current = false;
       }
     }, 10_000);
     return () => clearInterval(interval);
-  }, []);
+  }, [extensions]);
 
   // Save on unmount (covers all in-app navigation including item→item due to key={itemId})
   useEffect(() => {
     return () => {
       if (isDirty.current) {
-        onSaveRef.current(contentRef.current);
+        onSaveRef.current(
+          contentRef.current,
+          generateText(contentRef.current, extensions),
+        );
       }
     };
-  }, []);
+  }, [extensions]);
 
   // Save on browser unload / external navigation via keepalive fetch
   useEffect(() => {
@@ -169,13 +179,14 @@ export function RichTextEditor({
         RealmCategoryItemsRepository.updateNotesTextBeacon(
           itemId,
           contentRef.current,
+          generateText(contentRef.current, extensions),
           token,
         );
       }
     }
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
-  }, [itemId]);
+  }, [itemId, extensions]);
 
   if (!editor) return null;
 

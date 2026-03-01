@@ -77,7 +77,8 @@ export type Database = {
           icon: Json | null
           id: string
           label: string | null
-          notes_text: Json | null
+          notes: Json | null
+          notes_text: string | null
           order: string
         }
         Insert: {
@@ -87,7 +88,8 @@ export type Database = {
           icon?: Json | null
           id?: string
           label?: string | null
-          notes_text?: Json | null
+          notes?: Json | null
+          notes_text?: string | null
           order: string
         }
         Update: {
@@ -97,7 +99,8 @@ export type Database = {
           icon?: Json | null
           id?: string
           label?: string | null
-          notes_text?: Json | null
+          notes?: Json | null
+          notes_text?: string | null
           order?: string
         }
         Relationships: [
