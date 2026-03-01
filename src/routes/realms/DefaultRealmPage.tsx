@@ -1,6 +1,8 @@
-import { Progress } from "@/components/ui";
-import { useNewestRealmId } from "@/hooks/useNewestRealmId";
 import { Redirect } from "wouter";
+
+import { Progress } from "@/components/ui";
+
+import { useNewestRealmId } from "@/hooks/useNewestRealmId";
 
 import { routes } from "../routes";
 

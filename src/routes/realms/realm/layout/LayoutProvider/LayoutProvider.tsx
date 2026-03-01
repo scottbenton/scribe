@@ -1,5 +1,6 @@
-import { useBreakpointBelow } from "@/hooks/useBreakpoint";
 import { PropsWithChildren, useCallback, useMemo, useState } from "react";
+
+import { useBreakpointBelow } from "@/hooks/useBreakpoint";
 
 import { LayoutContext } from "./LayoutContext";
 

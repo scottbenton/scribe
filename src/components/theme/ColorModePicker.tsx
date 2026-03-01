@@ -1,6 +1,7 @@
-import { getThemeSettings, setMode } from "@/lib/theme";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useState } from "react";
+
+import { getThemeSettings, setMode } from "@/lib/theme";
 
 import { ButtonGroup, IconButton, ToggleGroup } from "../ui";
 

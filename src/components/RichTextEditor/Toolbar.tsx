@@ -1,6 +1,3 @@
-import { IconButton, Input } from "@/components/ui";
-import * as Popover from "@/components/ui/popover";
-import * as Select from "@/components/ui/select";
 import { createListCollection } from "@ark-ui/react/select";
 import { type Editor, useEditorState } from "@tiptap/react";
 import {
@@ -19,6 +16,10 @@ import {
 import { useRef, useState } from "react";
 import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
+
+import { IconButton, Input } from "@/components/ui";
+import * as Popover from "@/components/ui/popover";
+import * as Select from "@/components/ui/select";
 
 const HEADING_OPTIONS = [
   { label: "Paragraph", value: "0" },

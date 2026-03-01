@@ -1,6 +1,7 @@
-import { RealmCategoriesRepository } from "@/lib/repository/realm-categories.repository";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+
+import { RealmCategoriesRepository } from "@/lib/repository/realm-categories.repository";
 
 export function useRealmCategories(realmId: string) {
   const { data, isLoading, error } = useQuery({

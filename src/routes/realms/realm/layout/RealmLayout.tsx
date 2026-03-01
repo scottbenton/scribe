@@ -1,7 +1,8 @@
-import { ScrollArea } from "@/components/ui";
 import { PropsWithChildren } from "react";
 import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
+
+import { ScrollArea } from "@/components/ui";
 
 import { Header } from "./Header";
 import { LayoutProvider } from "./LayoutProvider";

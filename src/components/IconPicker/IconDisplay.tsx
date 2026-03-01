@@ -1,7 +1,9 @@
-import { GameIcon } from "@/components/GameIconSelector/GameIcon";
-import { type IconConfig } from "@/types/icon-config.type";
 import { FileText, Folder } from "lucide-react";
 import { useState } from "react";
+
+import { GameIcon } from "@/components/GameIconSelector/GameIcon";
+
+import { type IconConfig } from "@/types/icon-config.type";
 
 import { Icon, IconButton, IconProps } from "../ui";
 import { IconPickerDialog } from "./IconPickerDialog";

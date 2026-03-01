@@ -1,12 +1,14 @@
-import { GameIconList } from "@/components/GameIconSelector/GameIconList";
-import { Field, IconButton, Input } from "@/components/ui";
-import * as Dialog from "@/components/ui/dialog";
-import { type IconConfig } from "@/types/icon-config.type";
 import { Portal } from "@ark-ui/react/portal";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
 import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
+
+import { GameIconList } from "@/components/GameIconSelector/GameIconList";
+import { Field, IconButton, Input } from "@/components/ui";
+import * as Dialog from "@/components/ui/dialog";
+
+import { type IconConfig } from "@/types/icon-config.type";
 
 import {
   DEFAULT_ICON_COLOR_KEY,

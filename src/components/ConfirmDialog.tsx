@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui";
-import * as Dialog from "@/components/ui/dialog";
 import { Portal } from "@ark-ui/react/portal";
 import { type ReactNode } from "react";
 import { Box } from "styled-system/jsx";
+
+import { Button } from "@/components/ui";
+import * as Dialog from "@/components/ui/dialog";
 
 interface ConfirmDialogBaseProps {
   title: string;

@@ -1,5 +1,6 @@
-import { Database } from "@/types/supabase.type";
 import { createClient } from "@supabase/supabase-js";
+
+import { Database } from "@/types/supabase.type";
 
 import { getEnvVarOrThrow } from "./env.lib";
 

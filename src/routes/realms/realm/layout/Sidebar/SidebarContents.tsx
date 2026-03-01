@@ -1,6 +1,7 @@
+import { Box } from "styled-system/jsx";
+
 import { ScrollArea } from "@/components/ScrollArea";
 import { EditThemeButton } from "@/components/theme/EditThemeButton";
-import { Box } from "styled-system/jsx";
 
 import { Categories } from "./Categories";
 import { ChooseRealm } from "./ChooseRealm";

@@ -1,4 +1,3 @@
-import { IconButton } from "@/components/ui";
 import {
   PanelLeftCloseIcon,
   PanelLeftIcon,
@@ -6,6 +5,8 @@ import {
 } from "lucide-react";
 import { css } from "styled-system/css";
 import { Box } from "styled-system/jsx";
+
+import { IconButton } from "@/components/ui";
 
 import { useLayout } from "./LayoutProvider";
 

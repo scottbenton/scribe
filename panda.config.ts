@@ -1,3 +1,5 @@
+import { defineConfig } from "@pandacss/dev";
+
 import { animationStyles } from "@/theme/animation-styles";
 import * as colorPalette from "@/theme/colors";
 import { conditions } from "@/theme/conditions";
@@ -10,7 +12,6 @@ import { colors } from "@/theme/tokens/colors";
 import { durations } from "@/theme/tokens/durations";
 import { shadows } from "@/theme/tokens/shadows";
 import { zIndex } from "@/theme/tokens/z-index";
-import { defineConfig } from "@pandacss/dev";
 
 const semanticColors = {
   fg: {

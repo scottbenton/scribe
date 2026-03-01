@@ -1,10 +1,12 @@
-import { Button, Field, Heading, Input, PinInput, Text } from "@/components/ui";
-import { useAuthStore } from "@/store/auth.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Box, Stack } from "styled-system/jsx";
 import { z } from "zod/v4";
+
+import { Button, Field, Heading, Input, PinInput, Text } from "@/components/ui";
+
+import { useAuthStore } from "@/store/auth.store";
 
 const emailSchema = z.object({
   email: z.email("Please enter a valid email address"),
